@@ -39,16 +39,16 @@
 
 # Examples of commands:
 
-"xbindkeys_show" 
+"grep -q 'alacritty\|terminal' /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm && xbindkeys_show" 
   control+shift + q
 
-"tmux split-window -h"
+"grep -q 'alacritty\|terminal' /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm && tmux split-window -h"
   control+shift + 9
 
-"tmux split-window -v"
+"grep -q 'alacritty\|terminal' /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm && tmux split-window -v"
   control+shift + 0
 
-"tmux neww"
+"grep -q 'alacritty\|terminal' /proc/$(xdotool getwindowpid $(xdotool getwindowfocus))/comm && tmux neww"
   control+shift + t
 
 # set directly keycode (here control + f with my keyboard)

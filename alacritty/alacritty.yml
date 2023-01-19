@@ -1,0 +1,83 @@
+live_config_reload: true
+
+selection:
+  semantic_escape_chars: '|:"'' {}()[]<>'
+  save_to_clipboard: true
+
+window:
+  dimensions:
+    columns: 90
+    lines: 25
+  opacity: 1.0
+  padding:
+    x: 10
+    y: 5
+
+font:
+  normal:
+    family: "Hack"
+    style: Regular
+  bold:
+    family: "Hack"
+    style: Bold
+  italic:
+    family: "Hack"
+    style: Italic
+  bold_italic:
+    family: "Hack"
+    style: Bold Italic
+  size: 13
+
+draw_bold_text_with_bright_colors: true
+
+colors:
+  # Default colors
+  primary:
+    background: '0x1e2127'
+    foreground: '0xabb2bf'
+    bright_foreground: '0xe6efff'
+
+  # Normal colors
+  normal:
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
+
+  # Bright colors
+  bright:
+    black:   '0x5c6370'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0xe6efff'
+
+  # Dim colors
+  dim:
+    black:   '0x1e2127'
+    red:     '0xe06c75'
+    green:   '0x98c379'
+    yellow:  '0xd19a66'
+    blue:    '0x61afef'
+    magenta: '0xc678dd'
+    cyan:    '0x56b6c2'
+    white:   '0x828791'
+
+
+cursor:
+  style:
+    shape: Beam
+  unfocused_hollow: true
+
+key_bindings:
+  - { key: N, mods: Control, action: SpawnNewInstance }
+  - { key: Q, mods: Control, action: Quit }
+  - { key: W, mods: Control, action: Quit }
+  - { key: F, mods: Control, action: ToggleFullscreen }

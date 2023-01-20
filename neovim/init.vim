@@ -2,6 +2,7 @@ call plug#begin(stdpath('data') . '/plugged')
 
 Plug 'joshdick/onedark.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'sheerun/vim-polyglot'
 
 call plug#end()
 

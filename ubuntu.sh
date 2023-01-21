@@ -56,6 +56,11 @@ curl -s https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/
 sudo apt-get update
 sudo apt install code google-chrome-stable ./beekeeper-studio*.deb
 
+# hack font setup
+curl -s https://api.github.com/repos/source-foundry/Hack/releases/latest | jq -r ".assets[] | select(.name | contains(\"-ttf.zip\")) | .browser_download_url" | wget -i -
+unzip Hack-*.zip
+mv ttf ~/.local/share/fonts
+
 # copy configuration files
 cd $REPOSITORY_PATH
 cat zsh/.zshrc >> $HOME/.zshrc

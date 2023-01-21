@@ -3,7 +3,7 @@ REPOSITORY_PATH=$(pwd)
 DISABLE_UPDATE_PROMPT=yes
 
 # start at home
-cd
+cd $HOME
 
 # basic dependencies
 sudo apt update && sudo apt upgrade
@@ -11,6 +11,9 @@ sudo apt install -y wget gpg curl zsh neovim apt-transport-https tmux git jq cma
 
 # oh my zsh setup
 [ ! -d "$HOME/.oh-my-zsh" ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+# run the rest of the script from zsh
+zsh
 
 # pnpm & node setup
 curl -fsSL https://get.pnpm.io/install.sh | sh -

@@ -85,6 +85,7 @@ gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'cycle-windows'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.desktop.peripherals.mouse speed -0.3
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 14
 gsettings set org.gnome.desktop.peripherals.keyboard delay 300

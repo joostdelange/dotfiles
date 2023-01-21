@@ -46,15 +46,10 @@ curl -sS https://starship.rs/install.sh | sh -s -- -y
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 # chrome, vscode & beekeeper setup
-wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
-rm -f packages.microsoft.gpg
-curl -s https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/latest | jq -r ".assets[] | select(.name | contains(\"_amd64.deb\")) | .browser_download_url" | wget -i -
-sudo apt-get update
-sudo apt install code google-chrome-stable ./beekeeper-studio*.deb
+curl -sL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable.deb
+curl -sL http://go.microsoft.com/fwlink/\?LinkID\=760868 -o visual-studio-code.deb
+curl -sL https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/latest | jq -r ".assets[] | select(.name | contains(\"_amd64.deb\")) | .browser_download_url" | wget -i -
+sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb ./beekeeper-studio*.deb
 
 # hack font setup
 curl -s https://api.github.com/repos/source-foundry/Hack/releases/latest | jq -r ".assets[] | select(.name | contains(\"-ttf.zip\")) | .browser_download_url" | wget -i -

@@ -15,6 +15,10 @@ sudo apt install -y wget gpg curl zsh neovim apt-transport-https tmux git jq cma
 # run the rest of the script from zsh
 zsh
 
+# zsh-autosuggestions setup
+git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+omz plugin enable zsh-autosuggestions
+
 # pnpm & node setup
 curl -fsSL https://get.pnpm.io/install.sh | sh -
 pnpm env use -g 18

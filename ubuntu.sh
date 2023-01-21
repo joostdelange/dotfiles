@@ -71,3 +71,20 @@ cp starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
 mkdir -p $HOME/.config/nvim
 cp neovim/init.vim $HOME/.config/nvim/init.vim
+
+# gnome settings
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
+gsettings set org.gnome.shell.extensions.dash-to-dock pressure-threshold 0.0
+gsettings set org.gnome.shell.extensions.dash-to-dock show-delay 0
+gsettings set org.gnome.shell.extensions.dash-to-dock hide-delay 0
+gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-show-apps-button false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'cycle-windows'
+gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.desktop.peripherals.mouse speed -0.3
+gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 14
+gsettings set org.gnome.desktop.peripherals.keyboard delay 300

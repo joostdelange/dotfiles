@@ -7,7 +7,7 @@ cd
 
 # basic dependencies
 sudo apt update && sudo apt upgrade
-sudo apt install -y wget gpg curl zsh neovim apt-transport-https tmux git cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 libxss1 libappindicator1 libindicator7
+sudo apt install -y wget gpg curl zsh neovim apt-transport-https tmux git jq cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 libxss1 libappindicator1 libindicator7
 
 # oh my zsh setup
 [ ! -d "$HOME/.oh-my-zsh" ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -45,15 +45,16 @@ curl -sS https://starship.rs/install.sh | sh -s -- -y
 # vim plug setup
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-# chrome & vscode setup
+# chrome, vscode & beekeeper setup
 wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
 sudo sh -c 'echo "deb https://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
 sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
 rm -f packages.microsoft.gpg
+curl -s https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/latest | jq -r ".assets[] | select(.name | contains(\"_amd64.deb\")) | .browser_download_url" | wget -i -
 sudo apt-get update
-sudo apt install code google-chrome-stable
+sudo apt install code google-chrome-stable ./beekeeper-studio*.deb
 
 # copy configuration files
 cd $REPOSITORY_PATH

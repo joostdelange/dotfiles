@@ -1,189 +1,127 @@
-[character]
-success_symbol = "[>](bold green)"
-error_symbol = "[x](bold red)"
-vimcmd_symbol = "[<](bold green)"
+[aws]
+symbol = "  "
 
-[git_commit]
-tag_symbol = " tag "
-
-[git_status]
-ahead = ">"
-behind = "<"
-diverged = "<>"
-renamed = "r"
-deleted = "x"
-
-[bun]
-symbol = "bun "
+[buf]
+symbol = " "
 
 [c]
-symbol = "C "
-
-[cobol]
-symbol = "cobol "
+symbol = " "
 
 [conda]
-symbol = "conda "
-
-[crystal]
-symbol = "cr "
-
-[cmake]
-symbol = "cmake "
-
-[daml]
-symbol = "daml "
+symbol = " "
 
 [dart]
-symbol = "dart "
-
-[deno]
-symbol = "deno "
-
-[dotnet]
-symbol = ".NET "
+symbol = " "
 
 [directory]
-read_only = " ro"
+read_only = " "
 
 [docker_context]
-symbol = "docker "
+symbol = " "
 
 [elixir]
-symbol = "exs "
+symbol = " "
 
 [elm]
-symbol = "elm "
+symbol = " "
 
 [git_branch]
-symbol = "git "
+symbol = " "
 
 [golang]
-symbol = "go "
+symbol = " "
 
 [guix_shell]
-symbol = "guix "
+symbol = " "
+
+[haskell]
+symbol = " "
+
+[haxe]
+symbol = "⌘ "
 
 [hg_branch]
-symbol = "hg "
+symbol = " "
 
 [java]
-symbol = "java "
+symbol = " "
 
 [julia]
-symbol = "jl "
-
-[kotlin]
-symbol = "kt "
+symbol = " "
 
 [lua]
-symbol = "lua "
-
-[nodejs]
-symbol = "nodejs "
+symbol = " "
 
 [memory_usage]
-symbol = "memory "
+symbol = " "
 
 [meson]
-symbol = "meson "
+symbol = "喝 "
 
 [nim]
-symbol = "nim "
+symbol = " "
 
 [nix_shell]
-symbol = "nix "
+symbol = " "
 
-[ocaml]
-symbol = "ml "
-
-[opa]
-symbol = "opa "
+[nodejs]
+symbol = " "
 
 [os.symbols]
-Alpine = "alp "
-Amazon = "amz "
-Android = "andr "
-Arch = "rch "
-CentOS = "cent "
-Debian = "deb "
-DragonFly = "dfbsd "
-Emscripten = "emsc "
-EndeavourOS = "ndev "
-Fedora = "fed "
-FreeBSD = "fbsd "
-Garuda = "garu "
-Gentoo = "gent "
-HardenedBSD = "hbsd "
-Illumos = "lum "
-Linux = "lnx "
-Macos = "mac "
-Manjaro = "mjo "
-Mariner = "mrn "
-MidnightBSD = "mid "
-Mint = "mint "
-NetBSD = "nbsd "
-NixOS = "nix "
-OpenBSD = "obsd "
-openSUSE = "osuse "
-OracleLinux = "orac "
-Pop = "pop "
-Raspbian = "rasp "
-Redhat = "rhl "
-RedHatEnterprise = "rhel "
-Redox = "redox "
-Solus = "sol "
-SUSE = "suse "
-Ubuntu = "ubnt "
-Unknown = "unk "
-Windows = "win "
+Alpine = " "
+Amazon = " "
+Android = " "
+Arch = " "
+CentOS = " "
+Debian = " "
+DragonFly = " "
+Emscripten = " "
+EndeavourOS = " "
+Fedora = " "
+FreeBSD = " "
+Garuda = "﯑ "
+Gentoo = " "
+HardenedBSD = "ﲊ "
+Illumos = " "
+Linux = " "
+Macos = " "
+Manjaro = " "
+Mariner = " "
+MidnightBSD = " "
+Mint = " "
+NetBSD = " "
+NixOS = " "
+OpenBSD = " "
+openSUSE = " "
+OracleLinux = " "
+Pop = " "
+Raspbian = " "
+Redhat = " "
+RedHatEnterprise = " "
+Redox = " "
+Solus = "ﴱ "
+SUSE = " "
+Ubuntu = " "
+Unknown = " "
+Windows = " "
 
 [package]
-symbol = "pkg "
-
-[perl]
-symbol = "pl "
-
-[php]
-symbol = "php "
-
-[pulumi]
-symbol = "pulumi "
-
-[purescript]
-symbol = "purs "
+symbol = " "
 
 [python]
-symbol = "py "
+symbol = " "
 
-[raku]
-symbol = "raku "
+[rlang]
+symbol = "ﳒ "
 
 [ruby]
-symbol = "rb "
+symbol = " "
 
 [rust]
-symbol = "rs "
+symbol = " "
 
 [scala]
-symbol = "scala "
+symbol = " "
 
 [spack]
-symbol = "spack "
-
-[sudo]
-symbol = "sudo "
-
-[swift]
-symbol = "swift "
-
-[terraform]
-symbol = "terraform "
-
-[zig]
-symbol = "zig "
-
-[aws]
-format = 'on [$symbol($profile )(\($region\) )(\[$duration\] )]($style)'
-style = 'bold yellow'
-symbol = 'aws '
+symbol = "🅢 "

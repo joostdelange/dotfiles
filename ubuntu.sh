@@ -58,10 +58,10 @@ curl -sL http://go.microsoft.com/fwlink/\?LinkID\=760868 -o visual-studio-code.d
 curl -sL https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/latest | jq -r ".assets[] | select(.name | contains(\"_amd64.deb\")) | .browser_download_url" | wget -i -
 sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb ./beekeeper-studio*.deb
 
-# hack font setup
-curl -s https://api.github.com/repos/source-foundry/Hack/releases/latest | jq -r ".assets[] | select(.name | contains(\"-ttf.zip\")) | .browser_download_url" | wget -i -
-unzip Hack-*.zip
-mv ttf ~/.local/share/fonts
+# hack nerd font setup
+curl -s https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0/Hack.zip -o Hack/Hack.zip
+unzip Hack/Hack.zip
+mv Hack ~/.local/share/fonts
 
 # copy configuration files
 cd $REPOSITORY_PATH

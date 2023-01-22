@@ -74,6 +74,7 @@ cp neovim/init.vim $HOME/.config/nvim/init.vim
 
 # gnome settings
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
 gsettings set org.gnome.shell.extensions.dash-to-dock pressure-threshold 0.0

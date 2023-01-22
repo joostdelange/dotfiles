@@ -7,7 +7,7 @@ cd $HOME
 
 # basic dependencies
 sudo apt update && sudo apt upgrade
-sudo apt install -y wget gpg curl zsh neovim apt-transport-https tmux git jq cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 libxss1 libappindicator1 libindicator7
+sudo apt install -y wget gpg curl zsh apt-transport-https tmux git jq cmake pkg-config libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 libxss1 libappindicator1 libindicator7
 
 # oh my zsh setup
 [ ! -d "$HOME/.oh-my-zsh" ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -52,11 +52,12 @@ curl -sS https://starship.rs/install.sh | sh -s -- -y
 # vim plug setup
 sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-# chrome, vscode & beekeeper setup
+# chrome, vscode, beekeeper & neovim setup
 curl -sL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable.deb
 curl -sL http://go.microsoft.com/fwlink/\?LinkID\=760868 -o visual-studio-code.deb
 curl -sL https://api.github.com/repos/beekeeper-studio/beekeeper-studio/releases/latest | jq -r ".assets[] | select(.name | contains(\"_amd64.deb\")) | .browser_download_url" | wget -i -
-sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb ./beekeeper-studio*.deb
+curl -sL https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb -o nvim.deb
+sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb ./beekeeper-studio*.deb ./nvim.deb
 
 # hack nerd font setup
 curl -s https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0/Hack.zip -o Hack/Hack.zip

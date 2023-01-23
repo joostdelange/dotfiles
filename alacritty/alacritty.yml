@@ -80,7 +80,7 @@ cursor:
   unfocused_hollow: true
 
 key_bindings:
-  - { key: N, mods: Control, action: SpawnNewInstance }
-  - { key: Q, mods: Control, action: Quit }
-  - { key: W, mods: Control, action: Quit }
-  - { key: F, mods: Control, action: ToggleFullscreen }
+  - { key: T, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux neww"] } }    
+  - { key: LBracket, mods: Control, command: { program: "sh", args: ["-c", "tmux split-pane -h"] } }
+  - { key: RBracket, mods: Control, command: { program: "sh", args: ["-c", "tmux split-pane -v"] } }
+  - { key: W, mods: Control, command: { program: "sh", args: ["-c", "tmux kill-pane"] } }

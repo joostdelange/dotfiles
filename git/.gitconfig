@@ -1,0 +1,9 @@
+[user]
+	email = 
+	name = Joost de Lange
+[pull]
+	rebase = false
+[push]
+	default = current
+[core]
+	editor = nvim

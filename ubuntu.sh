@@ -72,6 +72,7 @@ cp starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
 mkdir -p $HOME/.config/nvim
 cp neovim/init.vim $HOME/.config/nvim/init.vim
+cp git/.gitconfig $HOME/.gitconfig
 
 # gnome settings
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true

@@ -81,6 +81,6 @@ cursor:
 
 key_bindings:
   - { key: T, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux neww"] } }    
-  - { key: LBracket, mods: Control, command: { program: "sh", args: ["-c", "tmux split-pane -h"] } }
-  - { key: RBracket, mods: Control, command: { program: "sh", args: ["-c", "tmux split-pane -v"] } }
-  - { key: W, mods: Control, command: { program: "sh", args: ["-c", "tmux kill-pane"] } }
+  - { key: Right, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux split-pane -h"] } }
+  - { key: Down, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux split-pane -v"] } }
+  - { key: W, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux kill-pane"] } }

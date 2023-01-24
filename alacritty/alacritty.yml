@@ -80,7 +80,7 @@ cursor:
   unfocused_hollow: true
 
 key_bindings:
-  - { key: T, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux neww"] } }    
-  - { key: Right, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux split-pane -h"] } }
-  - { key: Down, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux split-pane -v"] } }
+  - { key: T, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux neww -c '#{pane_current_path}'"] } }    
+  - { key: Right, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux split-pane -hc '#{pane_current_path}'"] } }
+  - { key: Down, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux split-pane -vc '#{pane_current_path}'"] } }
   - { key: W, mods: Control|Shift, command: { program: "sh", args: ["-c", "tmux kill-pane"] } }

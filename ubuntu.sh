@@ -60,8 +60,9 @@ curl -sL https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.
 sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb ./postbird.deb ./nvim.deb
 
 # hack nerd font setup
-curl -s https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0/Hack.zip -LO Hack.zip
-unzip Hack.zip
+mkdir Hack
+curl -s https://github.com/ryanoasis/nerd-fonts/releases/download/v2.3.0/Hack.zip -LO Hack/Hack.zip
+unzip Hack/Hack.zip
 mv Hack ~/.local/share/fonts
 
 # copy configuration files

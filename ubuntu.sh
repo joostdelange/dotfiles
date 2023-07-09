@@ -70,7 +70,7 @@ cd $REPOSITORY_PATH
 cat zsh/.zshrc >> $HOME/.zshrc
 cp tmux/.tmux.conf $HOME/.tmux.conf
 cp starship/starship.toml $HOME/.config/starship.toml
-mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.yml $HOME/.config/alacritty/alacritty.yml
+mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 mkdir -p $HOME/.config/nvim
 cp neovim/init.vim $HOME/.config/nvim/init.vim
 cp git/.gitconfig $HOME/.gitconfig

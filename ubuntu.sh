@@ -77,7 +77,7 @@ cp tmux/.tmux.conf $HOME/.tmux.conf
 cp starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 mkdir -p $HOME/.config/nvim
-cp nvim/lua/custom $HOME/.config/nvim/lua/custom
+cp -r nvim/lua/custom $HOME/.config/nvim/lua/custom
 cp git/.gitconfig $HOME/.gitconfig
 
 # gnome settings

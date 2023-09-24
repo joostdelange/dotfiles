@@ -7,7 +7,7 @@ cd $HOME
 
 # basic dependencies
 sudo apt update && sudo apt upgrade
-sudo apt install -y wget gpg curl zsh apt-transport-https tmux git jq cmake pkg-config neovim python2 postgresql postgresql-contrib libfuse2 libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 libxss1 libappindicator1 libindicator7
+sudo apt install -y wget gpg curl zsh apt-transport-https tmux git jq cmake pkg-config python2 postgresql postgresql-contrib libfuse2 libfreetype6-dev libfontconfig1-dev libxcb-xfixes0-dev libxkbcommon-dev python3 libxss1 libappindicator1 libindicator7
 
 # oh my zsh setup
 [ ! -d "$HOME/.oh-my-zsh" ] && sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -49,10 +49,7 @@ rm -rf alacritty-cloned
 cd $HOME
 curl -sS https://starship.rs/install.sh | sh -s -- -y
 
-# vim plug setup
-sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-
-# chrome, vscode, postbird & neovim setup
+# chrome, vscode, postbird
 curl -sL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable.deb
 curl -sL http://go.microsoft.com/fwlink/\?LinkID\=760868 -o visual-studio-code.deb
 curl -sL https://github.com/Paxa/postbird/releases/download/0.8.4/Postbird_0.8.4_amd64.deb -o postbird.deb
@@ -65,6 +62,14 @@ unzip Hack.zip -d Hack
 mv Hack ~/.local/share/fonts
 rm Hack.zip
 
+# neovim setup
+curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
+sudo chmod +x nvim.appimage
+sudo mv nvim.appimage /usr/local/bin/nvim
+
+# nvchad config
+git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
+
 # copy configuration files
 cd $REPOSITORY_PATH
 cat zsh/.zshrc >> $HOME/.zshrc
@@ -72,7 +77,7 @@ cp tmux/.tmux.conf $HOME/.tmux.conf
 cp starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 mkdir -p $HOME/.config/nvim
-cp neovim/init.vim $HOME/.config/nvim/init.vim
+cp nvim/lua/custom $HOME/.config/nvim/lua/custom
 cp git/.gitconfig $HOME/.gitconfig
 
 # gnome settings

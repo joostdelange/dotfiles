@@ -2,11 +2,10 @@
 
 # zsh-autosuggestions setup
 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-omz plugin enable zsh-autosuggestions
 
 # pnpm & node setup
 curl -fsSL https://get.pnpm.io/install.sh | sh -
-pnpm env use -g 18
+pnpm env use -g 20
 
 # aws setup
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -34,11 +33,23 @@ rm -rf alacritty-cloned
 cd $HOME
 curl -sS https://starship.rs/install.sh | sh -s -- -y
 
-# chrome, vscode, postbird
-curl -sL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable.deb
-curl -sL http://go.microsoft.com/fwlink/\?LinkID\=760868 -o visual-studio-code.deb
+# chrome setup
+wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+sudo add-apt-repository "deb [arch=amd64] https://dl.google.com/linux/chrome/deb stable main"
+
+# vscode setup
+wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
+sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" > /etc/apt/sources.list.d/vscode.list'
+rm -f packages.microsoft.gpg
+
+# tableplus setup
+wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null
 sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
-sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb tableplus
+
+# chrome, vscode, tableplus
+sudo apt update
+sudo apt install google-chrome-stable code tableplus
 
 # hack nerd font setup
 mkdir Hack
@@ -78,7 +89,7 @@ gsettings set org.gnome.shell.extensions.dash-to-dock show-show-apps-button fals
 gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'cycle-windows'
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
-gsettings set org.gnome.desktop.interface gtk-theme 'Adwaita-dark'
+gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.desktop.peripherals.mouse speed -0.3
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 14

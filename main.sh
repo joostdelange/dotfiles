@@ -15,5 +15,8 @@ sudo apt install -y wget gpg curl zsh apt-transport-https tmux git jq cmake pkg-
 # set the default shell to zsh
 chsh -s /bin/zsh
 
+# go back to repository path
+cd $REPOSITORY_PATH
+
 # execute the rest in a separate zsh sub shell
 ( SHELL=/bin/zsh . ./install.sh )

@@ -37,8 +37,8 @@ curl -sS https://starship.rs/install.sh | sh -s -- -y
 # chrome, vscode, postbird
 curl -sL https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -o google-chrome-stable.deb
 curl -sL http://go.microsoft.com/fwlink/\?LinkID\=760868 -o visual-studio-code.deb
-curl -sL https://github.com/Paxa/postbird/releases/download/0.8.4/Postbird_0.8.4_amd64.deb -o postbird.deb
-sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb ./postbird.deb
+sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
+sudo apt install ./visual-studio-code.deb ./google-chrome-stable.deb tableplus
 
 # hack nerd font setup
 mkdir Hack

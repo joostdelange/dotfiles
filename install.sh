@@ -47,9 +47,16 @@ rm -f packages.microsoft.gpg
 wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null
 sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 tableplus main"
 
-# chrome, vscode, tableplus
+# leapp setup
+curl -LO https://asset.noovolari.com/latest/Leapp-deb.zip
+unzip Leapp-deb.zip -d Leapp-deb
+
+# chrome, vscode, tableplus, leapp
 sudo apt update
-sudo apt install google-chrome-stable code tableplus
+sudo apt install google-chrome-stable code tableplus ./Leapp-deb/Leapp_*.deb
+
+# remove downloaded Leapp files
+rm -rf Leapp-deb.zip Leapp-deb
 
 # hack nerd font setup
 mkdir Hack

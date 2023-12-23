@@ -53,7 +53,7 @@ unzip Leapp-deb.zip -d Leapp-deb
 
 # chrome, vscode, tableplus, leapp
 sudo apt update
-sudo apt install google-chrome-stable code tableplus ./Leapp-deb/Leapp_*.deb
+sudo apt install google-chrome-stable code tableplus ./Leapp-deb/release/Leapp_*.deb
 
 # remove downloaded Leapp files
 rm -rf Leapp-deb.zip Leapp-deb

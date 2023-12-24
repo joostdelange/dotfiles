@@ -88,16 +88,18 @@ gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
 gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
 gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
-gsettings set org.gnome.shell.extensions.dash-to-dock pressure-threshold 0.0
+gsettings set org.gnome.shell.extensions.dash-to-dock pressure-threshold 0
 gsettings set org.gnome.shell.extensions.dash-to-dock show-delay 0
 gsettings set org.gnome.shell.extensions.dash-to-dock hide-delay 0
 gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
 gsettings set org.gnome.shell.extensions.dash-to-dock show-show-apps-button false
 gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'cycle-windows'
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'code.desktop', 'Alacritty.desktop', 'tableplus.desktop']"
 gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.desktop.peripherals.mouse speed -0.3
 gsettings set org.gnome.desktop.peripherals.keyboard repeat-interval 14
 gsettings set org.gnome.desktop.peripherals.keyboard delay 300
+gsettings set org.gnome.desktop.default-applications.terminal exec 'alacritty'

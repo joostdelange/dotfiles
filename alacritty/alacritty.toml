@@ -8,9 +8,10 @@ semantic_escape_chars = "|:\"' {}()[]<>"
 save_to_clipboard = true
 
 [window]
-opacity = 1
-dimensions = { columns = 90, lines = 25 }
-padding = { x = 10, y = 5 }
+opacity = 0.9
+padding = { x = 10, y = 10 }
+startup_mode = "Maximized"
+title = "Terminal"
 
 [font]
 size = 13
@@ -30,7 +31,7 @@ dim = { black = "0x1e2127", red = "0xe06c75", green = "0x98c379", yellow = "0xd1
 [cursor]
 unfocused_hollow = true
 style = { shape = "Beam" }
-  
+
 [keyboard]
 bindings = [
   { key = "T", mods = "Control|Shift", command = { program = "sh", args = [ "-c", "tmux neww -c '#{pane_current_path}'" ] } },
@@ -38,4 +39,3 @@ bindings = [
   { key = "Down", mods = "Control|Shift", command = { program = "sh", args = [ "-c", "tmux split-pane -vc '#{pane_current_path}'" ] } },
   { key = "W", mods = "Control|Shift", command = { program = "sh", args = [ "-c", "tmux kill-pane" ] } },
 ]
-

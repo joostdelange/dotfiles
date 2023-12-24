@@ -51,12 +51,15 @@ sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/22 ta
 curl -LO https://asset.noovolari.com/latest/Leapp-deb.zip
 unzip Leapp-deb.zip -d Leapp-deb
 
-# chrome, vscode, tableplus, leapp
+# aws session manager setup
+curl "https://s3.amazonaws.com/session-manager-downloads/plugin/latest/ubuntu_64bit/session-manager-plugin.deb" -o "session-manager-plugin.deb"
+
+# chrome, vscode, tableplus, leapp, aws session manager
 sudo apt update
-sudo apt install google-chrome-stable code tableplus ./Leapp-deb/release/Leapp_*.deb
+sudo apt install google-chrome-stable code tableplus ./Leapp-deb/release/Leapp_*.deb ./session-manager-plugin.deb
 
 # remove downloaded Leapp files
-rm -rf Leapp-deb.zip Leapp-deb
+rm -rf Leapp-deb.zip Leapp-deb session-manager-plugin.deb
 
 # hack nerd font setup
 mkdir Hack

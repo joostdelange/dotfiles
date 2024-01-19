@@ -68,22 +68,12 @@ unzip Hack.zip -d Hack
 mv Hack ~/.local/share/fonts
 rm Hack.zip
 
-# neovim setup
-curl -LO https://github.com/neovim/neovim/releases/download/stable/nvim.appimage
-sudo chmod +x nvim.appimage
-sudo mv nvim.appimage /usr/local/bin/nvim
-
-# nvchad config
-git clone https://github.com/NvChad/NvChad ~/.config/nvim --depth 1
-
 # copy configuration files
 cd $REPOSITORY_PATH
 cat zsh/.zshrc >> $HOME/.zshrc
 cp tmux/.tmux.conf $HOME/.tmux.conf
 cp starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
-mkdir -p $HOME/.config/nvim
-cp -r nvim/lua/custom $HOME/.config/nvim/lua/custom
 cp git/.gitconfig $HOME/.gitconfig
 
 # gnome settings

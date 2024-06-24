@@ -75,7 +75,7 @@ cp tmux/.tmux.conf $HOME/.tmux.conf
 cp starship/starship.toml $HOME/.config/starship.toml
 mkdir -p $HOME/.config/alacritty && cp alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 cp git/.gitconfig $HOME/.gitconfig
-
+mkdir $HOME/Projects
 # gnome settings
 gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false

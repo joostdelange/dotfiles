@@ -127,7 +127,7 @@ symbol = " "
 command = "f=$(ls ~/.aws/cli/cache -Art | tail -n 1) && d=$(jq -r '.Credentials.Expiration' ~/.aws/cli/cache/$f) && [ $d ] && date -u -d @$(($(date -d $d +%s) - $(date +%s))) +%Hh:%Mm:%Ss"
 when = ''' ls ~/.aws/cli/cache -Art | tail -n 1 '''
 style = 'bold yellow'
-format = '[(\($output\))]($style)'
+format = '[(\($output\))]($style) '
 
 [spack]
 symbol = "🅢 "

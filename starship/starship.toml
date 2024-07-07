@@ -124,7 +124,7 @@ symbol = " "
 symbol = " "
 
 [custom.aws_sso_timeout]
-command = "f=$(ls ~/.aws/cli/cache -Art | tail -n 1) && d=$(jq -r '.Credentials.Expiration' ~/.aws/cli/cache/$f) && [ $d ] && date -u -d @$(($(date -d $d +%s) - $(date +%s))) +%Hh:%Mm:%Ss"
+command = "f=$(ls ~/.aws/cli/cache -Art | tail -n 1) && d=$(jq -r '.Credentials.Expiration' ~/.aws/cli/cache/$f) && [ $d ] && diff=$(( $(date -d $d +%s) - $(date +%s) )) && [ $diff -gt 0 ] >
 when = ''' ls ~/.aws/cli/cache -Art | tail -n 1 '''
 style = 'bold yellow'
 format = '[(\($output\))]($style) '

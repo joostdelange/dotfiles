@@ -123,11 +123,11 @@ symbol = " "
 [scala]
 symbol = " "
 
+[spack]
+symbol = "🅢 "
+
 [custom.aws_sso_timeout]
-command = "f=$(ls ~/.aws/cli/cache -Art | tail -n 1) && d=$(jq -r '.Credentials.Expiration' ~/.aws/cli/cache/$f) && [ $d ] && diff=$(( $(date -d $d +%s) - $(date +%s) )) && [ $diff -gt 0 ] >
+command = "f=$(ls ~/.aws/cli/cache -Art | tail -n 1) && d=$(jq -r '.Credentials.Expiration' ~/.aws/cli/cache/$f) && [ $d ] && diff=$(( $(date -d $d +%s) - $(date +%s) )) && [ $diff -gt 0 ] && date -u -d @$diff +%Hh:%Mm:%Ss"
 when = ''' ls ~/.aws/cli/cache -Art | tail -n 1 '''
 style = 'bold yellow'
 format = '[(\($output\))]($style) '
-
-[spack]
-symbol = "🅢 "

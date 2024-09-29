@@ -64,12 +64,12 @@ if [ ! -d "$HOME/.local/share/fonts/Hack" ]; then
   unzip -o Hack.zip -d $HOME/.local/share/fonts/Hack
 fi
 
-if [ ! $(which starship) ]; then
-  cat $REPOSITORY_PATH/zsh/.zshrc >> $HOME/.zshrc
-fi
-
+cat $REPOSITORY_PATH/zsh/.zshrc >> $HOME/.zshrc
 cp $REPOSITORY_PATH/tmux/.tmux.conf $HOME/.tmux.conf
 mkdir -p $HOME/.config/alacritty && cp $REPOSITORY_PATH/alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
+cp $REPOSITORY_PATH/alacritty/Alacritty.desktop $HOME/.local/share/applications/Alacritty.desktop
 cp $REPOSITORY_PATH/git/.gitconfig $HOME/.gitconfig
+touch $HOME/.config/google-chrome/First\ Run
+xdg-settings set default-web-browser google-chrome.desktop
 dconf load / < $REPOSITORY_PATH/gnome/config.dconf
 mkdir -p $HOME/Projects

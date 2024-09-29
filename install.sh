@@ -69,6 +69,7 @@ cp $REPOSITORY_PATH/tmux/.tmux.conf $HOME/.tmux.conf
 mkdir -p $HOME/.config/alacritty && cp $REPOSITORY_PATH/alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
 cp $REPOSITORY_PATH/alacritty/Alacritty.desktop $HOME/.local/share/applications/Alacritty.desktop
 cp $REPOSITORY_PATH/git/.gitconfig $HOME/.gitconfig
+mkdir -p $HOME/.config/google-chrome
 touch $HOME/.config/google-chrome/First\ Run
 xdg-settings set default-web-browser google-chrome.desktop
 dconf load / < $REPOSITORY_PATH/gnome/config.dconf

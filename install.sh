@@ -41,7 +41,7 @@ if [ ! $(which nvim) ]; then
   curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
   tar -xf nvim-linux64.tar.gz
   sudo cp -r nvim-linux64 /opt/nvim-linux64
-  cp -r $REPOSITORY_PATH/Projects/neovim $HOME/.config/nvim
+  cp -r $REPOSITORY_PATH/neovim $HOME/.config/nvim
 fi
 
 if [ ! $(which google-chrome-stable) ]; then

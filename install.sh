@@ -37,6 +37,13 @@ if [ ! $(which starship) ]; then
   curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 
+if [ ! $(which nvim) ]; then
+  curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
+  tar -xf nvim-linux64.tar.gz
+  sudo cp -r nvim-linux64 /opt/nvim-linux64
+  cp -r $REPOSITORY_PATH/Projects/neovim $HOME/.config/nvim
+fi
+
 if [ ! $(which google-chrome-stable) ]; then
   wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
   sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'

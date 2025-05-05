@@ -4,14 +4,6 @@ fi
 
 eval "$(starship init zsh)"
 
-# pnpm
-export PNPM_HOME="/home/joostdelange/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-. "$HOME/.cargo/env"
+export PATH="/home/joostdelange/.local/share/pnpm:/opt/nvim-linux-x86_64/bin:/usr/local/go/bin:$PATH"
 
 alias ww="cd ~/Projects"

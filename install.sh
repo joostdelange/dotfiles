@@ -33,14 +33,18 @@ if [ ! $(which rustup) ]; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 fi
 
+if [ ! $(which go) ]; then
+  sudo add-apt-repository ppa:longsleep/golang-backports
+fi
+
 if [ ! $(which starship) ]; then
   curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 
 if [ ! $(which nvim) ]; then
-  curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux64.tar.gz"
-  tar -xf nvim-linux64.tar.gz
-  sudo cp -r nvim-linux64 /opt/nvim-linux64
+  curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
+  tar -xf nvim-linux-x86_64.tar.gz
+  sudo cp -r nvim-linux-x86_64 /opt/nvim-linux-x86_64
   cp -r $REPOSITORY_PATH/neovim $HOME/.config/nvim
 fi
 
@@ -66,7 +70,7 @@ fi
 
 if [ ! $(which google-chrome-stable) ] && [ ! $(which code) ] && [ ! $(which tableplus) ]; then
   sudo apt update
-  sudo apt install google-chrome-stable code tableplus -y
+  sudo apt install google-chrome-stable code tableplus golang -y
 fi
 
 if [ ! -d "$HOME/.local/share/fonts/Hack" ]; then

@@ -60,9 +60,13 @@ if [ ! $(which tableplus) ]; then
   sudo add-apt-repository "deb [arch=amd64] https://deb.tableplus.com/debian/24 tableplus main" -y
 fi
 
-if [ ! $(which google-chrome-stable) ] && [ ! $(which code) ] && [ ! $(which tableplus) ] && [ ! $(which alacritty) ]; then
+if [ ! $(which ghostty) ]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+fi
+
+if [ ! $(which google-chrome-stable) ] && [ ! $(which code) ] && [ ! $(which tableplus) ]; then
   sudo apt update
-  sudo apt install google-chrome-stable code tableplus alacritty -y
+  sudo apt install google-chrome-stable code tableplus -y
 fi
 
 if [ ! -d "$HOME/.local/share/fonts/Hack" ]; then
@@ -73,8 +77,7 @@ fi
 
 cat $REPOSITORY_PATH/zsh/.zshrc >> $HOME/.zshrc
 cp $REPOSITORY_PATH/tmux/.tmux.conf $HOME/.tmux.conf
-mkdir -p $HOME/.config/alacritty && cp $REPOSITORY_PATH/alacritty/alacritty.toml $HOME/.config/alacritty/alacritty.toml
-cp $REPOSITORY_PATH/alacritty/Alacritty.desktop $HOME/.local/share/applications/Alacritty.desktop
+mkdir -p $HOME/.config/ghostty && cp $REPOSITORY_PATH/ghostty/config $HOME/.config/ghostty/config
 cp $REPOSITORY_PATH/git/.gitconfig $HOME/.gitconfig
 mkdir -p $HOME/.config/google-chrome
 touch $HOME/.config/google-chrome/First\ Run

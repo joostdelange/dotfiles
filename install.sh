@@ -41,22 +41,13 @@ if [ ! $(which starship) ]; then
   curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi
 
-if [ ! $(which nvim) ]; then
-  curl -LO "https://github.com/neovim/neovim/releases/latest/download/nvim-linux-x86_64.tar.gz"
-  tar -xf nvim-linux-x86_64.tar.gz
-  sudo cp -r nvim-linux-x86_64 /opt/nvim-linux-x86_64
-  cp -r $REPOSITORY_PATH/neovim $HOME/.config/nvim
-fi
-
 if [ ! $(which google-chrome-stable) ]; then
   wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo tee /etc/apt/trusted.gpg.d/google.asc >/dev/null
   sudo sh -c 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 fi
 
-if [ ! $(which code) ]; then
-  wget -qO- https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > packages.microsoft.gpg
-  sudo install -D -o root -g root -m 644 packages.microsoft.gpg /etc/apt/keyrings/packages.microsoft.gpg
-  echo "deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main" |sudo tee /etc/apt/sources.list.d/vscode.list > /dev/null
+if [ ! $(which zed) ]; then
+  curl -f https://zed.dev/install.sh | sh
 fi
 
 if [ ! $(which tableplus) ]; then
@@ -68,9 +59,9 @@ if [ ! $(which ghostty) ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 fi
 
-if [ ! $(which google-chrome-stable) ] && [ ! $(which code) ] && [ ! $(which tableplus) ]; then
+if [ ! $(which google-chrome-stable) ] && [ ! $(which tableplus) ]; then
   sudo apt update
-  sudo apt install google-chrome-stable code tableplus golang -y
+  sudo apt install google-chrome-stable tableplus golang -y
 fi
 
 if [ ! -d "$HOME/.local/share/fonts/Hack" ]; then

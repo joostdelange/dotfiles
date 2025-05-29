@@ -1,7 +1,7 @@
 [user]
-	email = 
+	email =
 	name = Joost de Lange
-	signingKey = 
+	signingKey =
 [pull]
 	rebase = false
 [push]
@@ -9,4 +9,4 @@
 [commit]
 	gpgsign = true
 [core]
-	editor = nvim
+	editor = zed

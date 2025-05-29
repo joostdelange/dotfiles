@@ -1,3 +1,4 @@
 cursor-style = bar
 background-opacity = .9
 link-url = true
+initial-command = tmux

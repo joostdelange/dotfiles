@@ -70,7 +70,7 @@ if [ ! -d "$HOME/.local/share/fonts/Hack" ]; then
   unzip -o Hack.zip -d $HOME/.local/share/fonts/Hack
 fi
 
-cat $REPOSITORY_PATH/zsh/.zshrc > $HOME/.zshrc
+cat $REPOSITORY_PATH/zsh/.zshrc >> $HOME/.zshrc
 cp $REPOSITORY_PATH/tmux/.tmux.conf $HOME/.tmux.conf
 mkdir -p $HOME/.config/ghostty && cp $REPOSITORY_PATH/ghostty/config $HOME/.config/ghostty/config
 cp $REPOSITORY_PATH/git/.gitconfig $HOME/.gitconfig

@@ -87,7 +87,7 @@ sleep-inactive-ac-type='nothing'
 sleep-inactive-battery-type='nothing'
 
 [org/gnome/shell]
-favorite-apps=['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'code.desktop', 'Alacritty.desktop', 'tableplus.desktop']
+favorite-apps=['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'dev.zed.Zed.desktop', 'com.mitchellh.ghostty.desktop', 'tableplus.desktop']
 welcome-dialog-last-shown-version='47.0'
 
 [org/gnome/shell/extensions/dash-to-dock]

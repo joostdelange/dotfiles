@@ -75,6 +75,7 @@ toggle-tiled-right=@as []
 default-folder-viewer='icon-view'
 migrated-gtk-settings=true
 search-filter-time-type='last_modified'
+show-hidden-files=true
 
 [org/gnome/nautilus/window-state]
 initial-size=(890, 550)

@@ -13,6 +13,7 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 fi
 
 chsh -s /bin/zsh
+omz plugin enable zsh-autosuggestions
 
 if [ ! -d "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" ]; then
   git clone https://github.com/zsh-users/zsh-autosuggestions $HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions
@@ -34,7 +35,7 @@ if [ ! $(which rustup) ]; then
 fi
 
 if [ ! $(which go) ]; then
-  sudo add-apt-repository ppa:longsleep/golang-backports
+  sudo add-apt-repository ppa:longsleep/golang-backports -y
 fi
 
 if [ ! $(which starship) ]; then
@@ -71,6 +72,7 @@ if [ ! -d "$HOME/.local/share/fonts/Hack" ]; then
 fi
 
 cat $REPOSITORY_PATH/zsh/.zshrc >> $HOME/.zshrc
+touch $HOME/.aws/current_sso_profile
 cp $REPOSITORY_PATH/tmux/.tmux.conf $HOME/.tmux.conf
 mkdir -p $HOME/.config/ghostty && cp $REPOSITORY_PATH/ghostty/config $HOME/.config/ghostty/config
 cp $REPOSITORY_PATH/git/.gitconfig $HOME/.gitconfig

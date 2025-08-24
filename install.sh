@@ -74,6 +74,9 @@ cat $REPOSITORY_PATH/zsh/.zshrc >> $HOME/.zshrc
 cp $REPOSITORY_PATH/tmux/.tmux.conf $HOME/.tmux.conf
 mkdir -p $HOME/.config/ghostty && cp $REPOSITORY_PATH/ghostty/config $HOME/.config/ghostty/config
 cp $REPOSITORY_PATH/git/.gitconfig $HOME/.gitconfig
+mkdir -p $HOME/.config/zed
+cp $REPOSITORY_PATH/zed/settings.json $HOME/.config/zed/settings.json
+cp $REPOSITORY_PATH/zed/keymap.json $HOME/.config/zed/keymap.json
 mkdir -p $HOME/.config/google-chrome
 touch $HOME/.config/google-chrome/First\ Run
 xdg-settings set default-web-browser google-chrome.desktop

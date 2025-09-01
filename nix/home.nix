@@ -59,7 +59,7 @@ in
     file = {
       ".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/settings.json;
       ".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/keymap.json;
-      ".config/google-chrome/initial_preferences".source = config.lib.file.mkOutOfStoreSymlink ../chrome/initial_preferences;
+      ".config/google-chrome/First Run".text = "";
       ".npmrc".text = ''
         prefix = ~/.cache/npm
       '';

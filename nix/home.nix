@@ -72,13 +72,6 @@ in
     };
   };
 
-  gtk = {
-    iconTheme = {
-      name = "Yaru";
-      package = pkgs.yaru-theme;
-    };
-  };
-
   xdg = {
     desktopEntries = {
       tableplus = {
@@ -200,6 +193,7 @@ in
         font-name = "Hack Nerd Font 11";
         document-font-name = "Hack Nerd Font 11";
         monospace-font-name = "Hack Nerd Font Mono 11";
+        icon-theme = "Yaru";
         gtk-theme = "Yaru";
         cursor-theme = "Yaru";
       };

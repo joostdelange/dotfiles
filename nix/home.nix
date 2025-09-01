@@ -50,6 +50,7 @@ in
       pkgs.neovim
       tableplus
       pkgs.stremio
+      pkgs.yaru-theme
       pkgs.gnomeExtensions.dash-to-dock
       pkgs.gnomeExtensions.no-overview
     ];
@@ -68,6 +69,13 @@ in
       setPowerMode = lib.hm.dag.entryAfter ["installPackages"] ''
         /run/current-system/sw/bin/powerprofilesctl set performance
       '';
+    };
+  };
+
+  gtk = {
+    iconTheme = {
+      name = "Yaru";
+      package = pkgs.yaru-theme;
     };
   };
 
@@ -189,6 +197,11 @@ in
         color-scheme = "prefer-dark";
         accent-color = "orange";
         show-battery-percentage = true;
+        font-name = "Hack Nerd Font 11";
+        document-font-name = "Hack Nerd Font 11";
+        monospace-font-name = "Hack Nerd Font Mono 11";
+        gtk-theme = "Yaru";
+        cursor-theme = "Yaru";
       };
       "org/gnome/desktop/peripherals/keyboard" = {
         delay = 300;

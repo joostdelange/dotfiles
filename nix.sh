@@ -38,7 +38,7 @@ cat > $(pwd)/nix/home-overrides.nix << EOF
   home.username = "$(whoami)";
   home.homeDirectory = "/home/$(whoami)";
   programs.git.extraConfig.user.email = "";
-  programs.git.extraConfig.user.name = "";
+  programs.git.extraConfig.user.name = "$(getent passwd $USER | cut -d: -f5 | cut -d, -f1)";
   programs.git.extraConfig.user.signingKey = "";
 }
 EOF

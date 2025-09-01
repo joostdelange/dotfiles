@@ -59,6 +59,7 @@ in
     file = {
       ".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/settings.json;
       ".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/keymap.json;
+      ".config/google-chrome/initial_preferences".source = config.lib.file.mkOutOfStoreSymlink ../chrome/initial_preferences;
       ".npmrc".text = ''
         prefix = ~/.cache/npm
       '';
@@ -139,6 +140,9 @@ in
         link-url = true;
         command = "tmux";
       };
+    };
+    google-chrome = {
+      enable = true;
     };
   };
 

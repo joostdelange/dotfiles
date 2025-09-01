@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 
 let
   tableplusAppImage = pkgs.fetchurl {
@@ -61,6 +61,11 @@ in
       ".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/keymap.json;
       ".npmrc".text = ''
         prefix = ~/.cache/npm
+      '';
+    };
+    activation = {
+      setPowerMode = lib.hm.dag.entryAfter ["installPackages"] ''
+        /run/current-system/sw/bin/powerprofilesctl set performance
       '';
     };
   };
@@ -220,7 +225,7 @@ in
       "org/gnome/settings-daemon/plugins/power" = {
         ambient-enabled = false;
         idle-dim = false;
-        sleep-inactive-ac-timeout = 3600;
+        sleep-inactive-ac-timeout = 0;
         sleep-inactive-ac-type = "nothing";
         sleep-inactive-battery-type = "nothing";
       };

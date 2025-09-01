@@ -51,6 +51,7 @@ in
       tableplus
       pkgs.stremio
       pkgs.gnomeExtensions.dash-to-dock
+      pkgs.gnomeExtensions.no-overview
     ];
     sessionVariables = {
       EDITOR = "zeditor";
@@ -226,7 +227,7 @@ in
       "org/gnome/shell" = {
         favorite-apps = ["org.gnome.Nautilus.desktop" "google-chrome.desktop" "dev.zed.Zed.desktop" "com.mitchellh.ghostty.desktop" "tableplus.desktop"];
         welcome-dialog-last-shown-version = "47.0";
-        enabled-extensions = ["dash-to-dock@micxgx.gmail.com"];
+        enabled-extensions = ["dash-to-dock@micxgx.gmail.com" "no-overview@fthx"];
       };
       "org/gnome/shell/extensions/dash-to-dock" = {
         dock-position = "LEFT";

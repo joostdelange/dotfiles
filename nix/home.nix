@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 let
   tableplusAppImage = pkgs.fetchurl {
@@ -16,6 +16,8 @@ let
       ln -s $src $out/bin/tableplus
     '';
   };
+
+  unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 
 in
 {
@@ -43,7 +45,7 @@ in
       pkgs.nodejs_22
       pkgs.appimage-run
       pkgs.google-chrome
-      pkgs.zed-editor
+      unstable.zed-editor
       pkgs.ghostty
       pkgs.neovim
       tableplus
@@ -51,7 +53,11 @@ in
       pkgs.gnomeExtensions.dash-to-dock
     ];
     sessionVariables = {
-      EDITOR = "zed";
+      EDITOR = "zeditor";
+    };
+    file = {
+      ".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/settings.json;
+      ".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/keymap.json;
     };
   };
 
@@ -123,57 +129,6 @@ in
         background-opacity = 0.9;
         link-url = true;
         command = "tmux";
-      };
-    };
-    zed-editor = {
-      enable = true;
-      extensions = ["one-dark-pro" "material-icon-theme" "sql" "vue" "pug" "toml" "dockerfile" "nix"];
-      userKeymaps = [
-        {
-          context = "Workspace";
-          bindings = {
-            "shift shift" = "project_panel::CollapseAllEntries";
-          };
-        }
-        {
-          context = "Editor";
-          bindings = {
-            ctrl-d = "editor::DuplicateLineDown";
-            ctrl-shift-d = ["editor::SelectNext" { "replace_newest" = false; }];
-          };
-        }
-      ];
-      userSettings = {
-        languages = {
-          TypeScript = {
-            language_servers = ["tree-sitter-typescript" "!vtsls" "..."];
-          };
-        };
-        theme = {
-          mode = "system";
-          light = "One Light";
-          dark = "One Dark";
-        };
-        icon_theme = "Material Icon Theme";
-        ui_font_family = "Hack Nerd Font";
-        buffer_font_family = "Hack Nerd Font Mono";
-        ui_font_size = 18;
-        buffer_font_size = 16;
-        tab_size = 2;
-        autosave = "on_focus_change";
-        format_on_save = "off";
-        show_edit_predictions = false;
-        project_panel = {
-          auto_reveal_entries = false;
-        };
-        preview_tabs = {
-          enabled = false;
-        };
-        agent_servers = {
-          gemini = {
-            ignore_system_version = false;
-          };
-        };
       };
     };
   };

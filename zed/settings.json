@@ -1,0 +1,43 @@
+{
+  "agent": {
+    "default_profile": "write",
+    "model_parameters": [],
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "claude-sonnet-4"
+    }
+  },
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "icon_theme": "Material Icon Theme",
+  "ui_font_family": "Hack Nerd Font",
+  "buffer_font_family": "Hack Nerd Font Mono",
+  "ui_font_size": 18,
+  "buffer_font_size": 16,
+  "tab_size": 2,
+  "autosave": "on_focus_change",
+  "format_on_save": "off",
+  "show_edit_predictions": false,
+  "auto_install_extensions": {
+    "dockerfile": true,
+    "git-firefly": true,
+    "html": true,
+    "lua": true,
+    "material-icon-theme": true,
+    "one-dark-pro": true,
+    "postgres-language-server": true,
+    "pug": true,
+    "sql": true,
+    "toml": true,
+    "vue": true
+  },
+  "preview_tabs": {
+    "enabled": false
+  },
+  "project_panel": {
+    "auto_reveal_entries": false
+  }
+}

@@ -1,6 +1,7 @@
 #!/bin/bash
 
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-25.05.tar.gz home-manager
+nix-channel --add https://nixos.org/channels/nixos-unstable nixos-unstable
 nix-channel --update
 nix-shell '<home-manager>' -A install
 
@@ -10,6 +11,7 @@ rm -f $HOME/.config/home-manager/home.nix
 sudo ln -s $(pwd)/nix/configuration.nix /etc/nixos/
 ln -s $(pwd)/nix/home.nix $HOME/.config/home-manager/
 
+if [ ! -f $(pwd)/nix/configuration-overrides.nix ]; then
 cat > $(pwd)/nix/configuration-overrides.nix << EOF
 { pkgs, ... }:
 
@@ -26,7 +28,9 @@ cat > $(pwd)/nix/configuration-overrides.nix << EOF
   };
 }
 EOF
+fi
 
+if [ ! -f $(pwd)/nix/home-overrides.nix ]; then
 cat > $(pwd)/nix/home-overrides.nix << EOF
 { ... }:
 
@@ -38,5 +42,8 @@ cat > $(pwd)/nix/home-overrides.nix << EOF
   programs.git.extraConfig.user.signingKey = "";
 }
 EOF
+fi
 
-mkdir -p $HOME/.aws && touch $HOME/.aws/current_sso_profile
+if [ ! -f $HOME/.aws/current_sso_profile ]; then
+  mkdir -p $HOME/.aws && touch $HOME/.aws/current_sso_profile
+fi

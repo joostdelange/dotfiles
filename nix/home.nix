@@ -58,6 +58,9 @@ in
     file = {
       ".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/settings.json;
       ".config/zed/keymap.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/keymap.json;
+      ".npmrc".text = ''
+        prefix = ~/.cache/npm
+      '';
     };
   };
 
@@ -85,7 +88,7 @@ in
         pull = { rebase = false; };
         push = { default = "current"; };
         commit = { gpgsign = true; };
-        core = { editor = "nano"; };
+        core = { editor = "nvim"; };
       };
     };
     zsh = {

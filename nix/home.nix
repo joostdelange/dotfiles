@@ -81,6 +81,7 @@ in
         genericName = "Tableplus";
         exec = "tableplus %U";
         terminal = false;
+        icon = "${config.home.homeDirectory}/Pictures/tableplus.png";
       };
     };
   };

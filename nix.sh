@@ -47,3 +47,7 @@ fi
 if [ ! -f $HOME/.aws/current_sso_profile ]; then
   mkdir -p $HOME/.aws && touch $HOME/.aws/current_sso_profile
 fi
+
+if [ ! -f $HOME/Pictures/tableplus.png ]; then
+  curl -o $HOME/Pictures/tableplus.png https://tableplus.com/resources/favicons/apple-icon.png
+fi

@@ -57,6 +57,7 @@ in
     ];
     sessionVariables = {
       EDITOR = "zeditor";
+      NO_BUN = "true";
     };
     file = {
       ".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/settings.json;
@@ -191,9 +192,6 @@ in
         color-scheme = "prefer-dark";
         accent-color = "orange";
         show-battery-percentage = true;
-        font-name = "Hack Nerd Font 11";
-        document-font-name = "Hack Nerd Font 11";
-        monospace-font-name = "Hack Nerd Font Mono 11";
         icon-theme = "Yaru";
         gtk-theme = "Yaru";
         cursor-theme = "Yaru";

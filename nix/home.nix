@@ -53,6 +53,7 @@ in
       pkgs.yaru-theme
       pkgs.gnomeExtensions.dash-to-dock
       pkgs.gnomeExtensions.no-overview
+      pkgs.fw-ectool
     ];
     sessionVariables = {
       EDITOR = "zeditor";

@@ -37,6 +37,10 @@ in
       pkgs.starship
       pkgs.awscli2
       pkgs.typescript
+      pkgs.rustc
+      pkgs.rust-analyzer
+      pkgs.cargo
+      pkgs.binutils
       pkgs.esbuild
       pkgs.nodePackages.ts-node
       pkgs.nerd-fonts.hack
@@ -46,8 +50,10 @@ in
       pkgs.appimage-run
       pkgs.google-chrome
       unstable.zed-editor
+      pkgs.package-version-server
       pkgs.ghostty
       pkgs.neovim
+      pkgs.caligula
       tableplus
       pkgs.stremio
       pkgs.yaru-theme
@@ -58,6 +64,7 @@ in
     sessionVariables = {
       EDITOR = "zeditor";
       NO_BUN = "true";
+      NIXOS_OZONE_WL = "1";
     };
     file = {
       ".config/zed/settings.json".source = config.lib.file.mkOutOfStoreSymlink ../zed/settings.json;

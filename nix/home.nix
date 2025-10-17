@@ -3,7 +3,7 @@
 let
   tableplusAppImage = pkgs.fetchurl {
     url = "https://tableplus.com/release/linux/x64/TablePlus-x64.AppImage";
-    sha256 = "sha256-4HIPkWqpIcyycpqs3ELcQZUlgmcXeHxdsJ6gS8YmIAg=";
+    sha256 = "sha256-3qMFdjtwnGyGTZqHgKRA9RKH4cQgOJ9RsS/0hzH+tKU=";
   };
 
   tableplus = pkgs.appimageTools.wrapType2 {
@@ -30,6 +30,7 @@ in
       pkgs.curl
       pkgs.git
       pkgs.jq
+      pkgs.unzip
       pkgs.nixd
       pkgs.nil
       pkgs.oh-my-zsh
@@ -56,6 +57,7 @@ in
       pkgs.caligula
       tableplus
       pkgs.stremio
+      unstable.mullvad-vpn
       pkgs.yaru-theme
       pkgs.gnomeExtensions.dash-to-dock
       pkgs.gnomeExtensions.no-overview

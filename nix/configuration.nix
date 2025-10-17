@@ -42,6 +42,9 @@
       };
       pulse = { enable = true; };
     };
+    mullvad-vpn = {
+      enable = true;
+    };
   };
 
   security = {

@@ -17,6 +17,22 @@ let
     '';
   };
 
+  heliumAppImage = pkgs.fetchurl {
+    url = "https://github.com/imputnet/helium-linux/releases/download/0.5.6.1/helium-0.5.6.1-x86_64.AppImage";
+    sha256 = "sha256-J1hTquA47gim0H7TFMM+JabY5YRcL5snJTpM/elN1zI=";
+  };
+
+  helium = pkgs.appimageTools.wrapType2 {
+    name = "helium";
+    src = heliumAppImage;
+    version = "1.0";
+    pname = "helium";
+    extraInstallCommands = ''
+      mkdir -p $out/bin
+      ln -s $src $out/bin/helium
+    '';
+  };
+
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 
 in
@@ -49,15 +65,19 @@ in
       pkgs.docker
       pkgs.nodejs_22
       pkgs.appimage-run
+      pkgs.rclone
       pkgs.google-chrome
       unstable.zed-editor
+      unstable.opencode
       pkgs.package-version-server
       pkgs.ghostty
       pkgs.neovim
       pkgs.caligula
       tableplus
+      helium
       pkgs.stremio
       unstable.mullvad-vpn
+      unstable.lmstudio
       pkgs.yaru-theme
       pkgs.gnomeExtensions.dash-to-dock
       pkgs.gnomeExtensions.no-overview
@@ -91,6 +111,13 @@ in
         exec = "tableplus %U";
         terminal = false;
         icon = "${config.home.homeDirectory}/Pictures/tableplus.png";
+      };
+      helium = {
+        name = "Helium";
+        genericName = "Helium";
+        exec = "helium %U";
+        terminal = false;
+        icon = "${config.home.homeDirectory}/Pictures/helium.png";
       };
     };
   };
@@ -250,7 +277,7 @@ in
         sleep-inactive-battery-type = "nothing";
       };
       "org/gnome/shell" = {
-        favorite-apps = ["org.gnome.Nautilus.desktop" "google-chrome.desktop" "dev.zed.Zed.desktop" "com.mitchellh.ghostty.desktop" "tableplus.desktop"];
+        favorite-apps = ["org.gnome.Nautilus.desktop" "helium.desktop" "dev.zed.Zed.desktop" "com.mitchellh.ghostty.desktop" "tableplus.desktop"];
         welcome-dialog-last-shown-version = "47.0";
         enabled-extensions = ["dash-to-dock@micxgx.gmail.com" "no-overview@fthx"];
       };

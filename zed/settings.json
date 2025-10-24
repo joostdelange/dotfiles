@@ -20,7 +20,7 @@
   "tab_size": 2,
   "autosave": "on_focus_change",
   "format_on_save": "off",
-  "show_edit_predictions": false,
+  "show_edit_predictions": true,
   "auto_install_extensions": {
     "dockerfile": true,
     "git-firefly": true,

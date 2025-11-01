@@ -33,6 +33,22 @@ let
     '';
   };
 
+  cursorAppImage = pkgs.fetchurl {
+    url = "https://downloads.cursor.com/production/45fd70f3fe72037444ba35c9e51ce86a1977ac11/linux/x64/Cursor-2.0.34-x86_64.AppImage";
+    sha256 = "sha256-x51N2BttMkfKwH4/Uxn/ZNFVPZbaNdsZm8BFFIMmxBM=";
+  };
+
+  cursor = pkgs.appimageTools.wrapType2 {
+    name = "cursor";
+    src = cursorAppImage;
+    version = "1.0";
+    pname = "cursor";
+    extraInstallCommands = ''
+      mkdir -p $out/bin
+      ln -s $src $out/bin/cursor
+    '';
+  };
+
   unstable = import <nixos-unstable> { config = { allowUnfree = true; }; };
 
 in
@@ -75,6 +91,7 @@ in
       pkgs.caligula
       tableplus
       helium
+      cursor
       pkgs.stremio
       unstable.mullvad-vpn
       unstable.lmstudio
@@ -118,6 +135,13 @@ in
         exec = "helium %U";
         terminal = false;
         icon = "${config.home.homeDirectory}/Pictures/helium.png";
+      };
+      cursor = {
+        name = "Cursor";
+        genericName = "Cursor";
+        exec = "cursor %U";
+        terminal = false;
+        icon = "${config.home.homeDirectory}/Pictures/cursor.webp";
       };
     };
   };

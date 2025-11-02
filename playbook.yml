@@ -1,0 +1,275 @@
+---
+# This playbook installs and configures your Ubuntu desktop.
+# It is designed to be run multiple times safely (it's idempotent).
+#
+# USAGE:
+# 1. Install Ansible & collections:
+#    sudo apt install ansible
+#    ansible-galaxy collection install community.general
+#
+# 2. Run the playbook:
+#    ansible-playbook playbook.yml --ask-become-pass
+#
+- hosts: localhost
+  connection: local
+  # 'become: true' means "run tasks as sudo" by default.
+  # We will override this for user-specific tasks.
+  become: true
+
+  # ------------------------------------------------------------------
+  # VARIABLES
+  # ------------------------------------------------------------------
+  vars:
+    user_home: "{{ ansible_env.HOME }}"
+    username: "{{ ansible_env.USER }}"
+    dotfiles_dir: "{{ ansible_env.PWD }}" # Assumes you run this from inside your dotfiles repo
+
+  # ------------------------------------------------------------------
+  # TASKS
+  # ------------------------------------------------------------------
+  tasks:
+    - name: 1. System | Update apt cache and upgrade packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: "yes" # Equivalent to apt upgrade -y
+
+    - name: 1. System | Install base APT packages
+      ansible.builtin.apt:
+        name:
+          - wget
+          - gpg
+          - curl
+          - zsh
+          - apt-transport-https
+          - tmux
+          - git
+          - jq
+          - cmake
+          - pkg-config
+          - python3
+          - postgresql
+          - postgresql-contrib
+          - xclip
+        state: present
+
+    # ------------------------------------------------------------------
+    # 2. 3rd-Party Repositories (Chrome, TablePlus, Go)
+    # We add all repos first, then install in one go.
+    # ------------------------------------------------------------------
+
+    - name: 2. Repos | Add Google Chrome GPG key
+      ansible.builtin.get_url:
+        url: https://dl.google.com/linux/linux_signing_key.pub
+        dest: /etc/apt/trusted.gpg.d/google.asc
+        mode: '0644'
+        force: true
+
+    - name: 2. Repos | Add Google Chrome repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/etc/apt/trusted.gpg.d/google.asc] http://dl.google.com/linux/chrome/deb/ stable main"
+        filename: google-chrome
+        state: present
+
+    - name: 2. Repos | Add TablePlus GPG key
+      ansible.builtin.shell:
+        cmd: "wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null"
+        # 'creates' makes this command idempotent.
+        creates: /etc/apt/trusted.gpg.d/tableplus-archive.gpg
+
+    - name: 2. Repos | Add TablePlus repository
+      ansible.builtin.apt_repository:
+        repo: "deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/tableplus-archive.gpg] https://deb.tableplus.com/debian/24 tableplus main"
+        filename: tableplus
+        state: present
+
+    - name: 2. Repos | Add Golang PPA
+      ansible.builtin.apt_repository:
+        repo: ppa:longsleep/golang-backports
+        state: present
+
+    - name: 2. Repos | Install all 3rd-party APT packages
+      ansible.builtin.apt:
+        name:
+          - google-chrome-stable
+          - tableplus
+          - golang
+        state: present
+        update_cache: yes # Update cache after adding new repos
+
+    # ------------------------------------------------------------------
+    # 3. Shell-based Installers (Oh My Zsh, pnpm, aws, rust, etc.)
+    # We use 'creates:' to make these idempotent.
+    # ------------------------------------------------------------------
+
+    - name: 3. Installers | Install Oh My Zsh
+      ansible.builtin.shell:
+        cmd: 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended'
+        creates: "{{ user_home }}/.oh-my-zsh"
+      become: false # Run as the user
+
+    - name: 3. Installers | Install pnpm
+      ansible.builtin.shell:
+        cmd: "curl -fsSL https://get.pnpm.io/install.sh | sh -"
+        creates: "{{ user_home }}/.local/share/pnpm/pnpm"
+      become: false
+      environment:
+        PNPM_HOME: "{{ user_home }}/.local/share/pnpm"
+
+    - name: 3. Installers | Install Starship
+      ansible.builtin.shell:
+        cmd: "curl -sS https://starship.rs/install.sh | sh -s -- -y"
+        creates: /usr/local/bin/starship
+      # Runs with 'become: true' (sudo) by default to install to /usr/local/bin
+
+    - name: 3. Installers | Install Rustup
+      ansible.builtin.shell:
+        cmd: "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y"
+        creates: "{{ user_home }}/.cargo/bin/rustup"
+      become: false
+
+    - name: 3. Installers | Install Zed Editor
+      ansible.builtin.shell:
+        cmd: "curl -f https://zed.dev/install.sh | sh"
+        creates: "{{ user_home }}/.local/bin/zed"
+      become: false
+
+    - name: 3. Installers | Install Ghostty Terminal
+      ansible.builtin.shell:
+        cmd: '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"'
+        creates: "{{ user_home }}/.local/bin/ghostty"
+      become: false
+
+    - name: 3. Installers | Check if AWS CLI is installed
+      ansible.builtin.stat:
+        path: /usr/local/bin/aws
+      register: aws_cli
+
+    - name: 3. Installers | Install AWS CLI
+      when: not aws_cli.stat.exists
+      block:
+        - name: Download AWS CLI
+          ansible.builtin.unarchive:
+            src: "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip"
+            dest: /tmp/
+            remote_src: yes
+        - name: Run AWS CLI installer
+          ansible.builtin.command:
+            cmd: /tmp/aws/install
+        - name: Clean up AWS CLI installer
+          ansible.builtin.file:
+            path: "{{ item }}"
+            state: absent
+          with_items:
+            - /tmp/aws
+            - /tmp/awscliv2.zip
+
+    # ------------------------------------------------------------------
+    # 4. Zsh Configuration
+    # ------------------------------------------------------------------
+
+    - name: 4. Zsh | Set zsh as default shell
+      ansible.builtin.user:
+        name: "{{ username }}"
+        shell: /bin/zsh
+
+    - name: 4. Zsh | Clone zsh-autosuggestions plugin
+      ansible.builtin.git:
+        repo: 'https://github.com/zsh-users/zsh-autosuggestions.git'
+        dest: '{{ user_home }}/.oh-my-zsh/custom/plugins/zsh-autosuggestions'
+      become: false
+
+    - name: 4. Zsh | Append .zshrc settings idempotently
+      # This is the correct, idempotent way to do 'cat file >> dest'
+      # It adds a managed block to the end of the file.
+      ansible.builtin.blockinfile:
+        path: "{{ user_home }}/.zshrc"
+        create: true # Create the file if it doesn't exist
+        marker: "# {mark} ANSIBLE MANAGED BLOCK (from dotfiles/zsh/.zshrc)"
+        block: "{{ lookup('file', '{{ dotfiles_dir }}/zsh/.zshrc') }}"
+      become: false
+
+    # ------------------------------------------------------------------
+    # 5. Fonts
+    # ------------------------------------------------------------------
+
+    - name: 5. Fonts | Check if Hack font is installed
+      ansible.builtin.stat:
+        path: "{{ user_home }}/.local/share/fonts/Hack"
+      register: hack_font_dir
+
+    - name: 5. Fonts | Install Hack Nerd Font
+      when: not hack_font_dir.stat.exists
+      become: false
+      block:
+        - name: Create Hack font directory
+          ansible.builtin.file:
+            path: "{{ user_home }}/.local/share/fonts/Hack"
+            state: directory
+            mode: '0755'
+        - name: Download and unzip Hack Nerd Font
+          ansible.builtin.unarchive:
+            src: "https://github.com/ryanoasis/nerd-fonts/releases/latest/download/Hack.zip"
+            dest: "{{ user_home }}/.local/share/fonts/Hack"
+            remote_src: yes
+            extra_opts: ['-o'] # Overwrite files
+        - name: Rebuild font cache
+          ansible.builtin.command:
+            cmd: "fc-cache -f -v"
+          changed_when: false # Don't report this as a change
+
+    # ------------------------------------------------------------------
+    # 6. Copy Configuration Files
+    # 'ansible.builtin.copy' is idempotent and creates directories.
+    # ------------------------------------------------------------------
+
+    - name: 6. Configs | Create base directories
+      ansible.builtin.file:
+        path: "{{ user_home }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      become: false
+      with_items:
+        - ".aws"
+        - "Projects"
+        - ".config/google-chrome"
+
+    - name: 6. Configs | Touch AWS SSO profile file
+      ansible.builtin.file:
+        path: "{{ user_home }}/.aws/current_sso_profile"
+        state: touch
+      become: false
+
+    - name: 6. Configs | Touch Google Chrome 'First Run' file
+      ansible.builtin.file:
+        path: "{{ user_home }}/.config/google-chrome/First Run"
+        state: touch
+      become: false
+
+    - name: 6. Configs | Copy config files
+      ansible.builtin.copy:
+        src: "{{ dotfiles_dir }}/{{ item.src }}"
+        dest: "{{ user_home }}/{{ item.dest }}"
+        mode: '0644'
+      become: false
+      with_items:
+        - { src: 'tmux/.tmux.conf', dest: '.tmux.conf' }
+        - { src: 'ghostty/config', dest: '.config/ghostty/config' }
+        - { src: 'git/.gitconfig', dest: '.gitconfig' }
+        - { src: 'zed/settings.json', dest: '.config/zed/settings.json' }
+        - { src: 'zed/keymap.json', dest: '.config/zed/keymap.json' }
+
+    # ------------------------------------------------------------------
+    # 7. System Settings (dconf / gsettings)
+    # ------------------------------------------------------------------
+
+    - name: 7. Settings | Set default web browser
+      ansible.builtin.command:
+        cmd: "xdg-settings set default-web-browser google-chrome.desktop"
+      become: false
+      changed_when: false # This command doesn't report change, so we don't.
+
+    - name: 7. Settings | Load GNOME dconf settings
+      community.general.dconf_load:
+        file: "{{ dotfiles_dir }}/gnome/config.dconf"
+        path: "/"
+      become: false # Must run as the user

@@ -1,0 +1,12 @@
+[user]
+	email =
+	name = Joost de Lange
+	signingKey =
+[pull]
+	rebase = false
+[push]
+	default = current
+[commit]
+	gpgsign = true
+[core]
+	editor = nano

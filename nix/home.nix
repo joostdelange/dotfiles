@@ -3,7 +3,7 @@
 let
   tableplusAppImage = pkgs.fetchurl {
     url = "https://tableplus.com/release/linux/x64/TablePlus-x64.AppImage";
-    sha256 = "sha256-3qMFdjtwnGyGTZqHgKRA9RKH4cQgOJ9RsS/0hzH+tKU=";
+    sha256 = "sha256-RQqZhOTQQ9mdd44Nt2/NYaNYwc+4+7hdje19ltV82jU=";
   };
 
   tableplus = pkgs.appimageTools.wrapType2 {
@@ -18,8 +18,8 @@ let
   };
 
   heliumAppImage = pkgs.fetchurl {
-    url = "https://github.com/imputnet/helium-linux/releases/download/0.5.6.1/helium-0.5.6.1-x86_64.AppImage";
-    sha256 = "sha256-J1hTquA47gim0H7TFMM+JabY5YRcL5snJTpM/elN1zI=";
+    url = "https://github.com/imputnet/helium-linux/releases/download/0.6.4.1/helium-0.6.4.1-x86_64.AppImage";
+    sha256 = "sha256-DlEFuFwx2Qjr9eb6uiSYzM/F3r2hdtkMW5drJyJt/YE=";
   };
 
   helium = pkgs.appimageTools.wrapType2 {

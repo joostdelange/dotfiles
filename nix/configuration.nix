@@ -45,6 +45,9 @@
     mullvad-vpn = {
       enable = true;
     };
+    tailscale = {
+      enable = true;
+    };
   };
 
   security = {

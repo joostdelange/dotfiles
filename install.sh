@@ -37,7 +37,14 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 }
 
 awsswitch $(cat ~/.aws/current_sso_profile)
-alias ww="cd ~/Projects"" > ~/.zshrc
+alias ww=\"cd ~/Projects\"" >> ~/.zshrc
+  echo "command = tmux" >> ~/.config/ghostty/config
+fi
+
+if ! command -v starship &> /dev/null; then
+  log "Installing Starship..."
+  curl -sS https://starship.rs/install.sh | sh
+  echo "eval \"$(starship init zsh)\"" >> ~/.zshrc
 fi
 
 if ! command -v docker &> /dev/null; then
@@ -45,6 +52,11 @@ if ! command -v docker &> /dev/null; then
   sudo apt install -y docker.io
   sudo usermod -aG docker "$USER"
   warn "You will need to log out and back in for Docker group changes to take effect."
+fi
+
+if ! command -v pnpm &> /dev/null; then
+  log "Installing pnpm..."
+  curl -fsSL https://get.pnpm.io/install.sh | sh -
 fi
 
 if ! command -v mullvad &> /dev/null; then
@@ -93,36 +105,6 @@ if ! command -v zed &> /dev/null; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
-install_helium() {
-  local name="Helium"
-  local url="https://github.com/imputnet/helium-linux/releases/download/0.6.4.1/helium-0.6.4.1-x86_64.AppImage"
-  local dest="$HOME/Documents/$name.AppImage"
-
-  if [ ! -f "$dest" ]; then
-    log "Installing $name..."
-    wget -O "$dest" "$url"
-    chmod +x "$dest"
-    mkdir -p "$HOME/Pictures"
-    if [ ! -f "$HOME/Pictures/helium.png" ]; then
-      wget -O "$HOME/Pictures/helium.png" "https://raw.githubusercontent.com/imputnet/helium/master/resources/icon_512.png"
-    fi
-
-    cat > "$HOME/.local/share/applications/$name.desktop" <<EOF
-[Desktop Entry]
-Name=$name
-Exec=$dest
-Icon=$HOME/Pictures/helium.png
-Type=Application
-Terminal=false
-Categories=Network;WebBrowser;
-EOF
-  else
-    log "$name already installed."
-  fi
-}
-
-install_helium
-
 log "Linking Zed configurations..."
 mkdir -p "$ZED_CONFIG_DIR"
 [ -f "$ZED_CONFIG_DIR/settings.json" ] && [ ! -L "$ZED_CONFIG_DIR/settings.json" ] && mv "$ZED_CONFIG_DIR/settings.json" "$ZED_CONFIG_DIR/settings.json.bak"
@@ -168,12 +150,87 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Yaru'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.shell.extensions.dash-to-dock activate-single-window true
+gsettings set org.gnome.shell.extensions.dash-to-dock always-center-icons false
+gsettings set org.gnome.shell.extensions.dash-to-dock animate-show-apps true
+gsettings set org.gnome.shell.extensions.dash-to-dock animation-time 0.2
+gsettings set org.gnome.shell.extensions.dash-to-dock application-counter-overrides-notifications true
+gsettings set org.gnome.shell.extensions.dash-to-dock apply-custom-theme false
+gsettings set org.gnome.shell.extensions.dash-to-dock apply-glossy-effect true
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide true
+gsettings set org.gnome.shell.extensions.dash-to-dock autohide-in-fullscreen false
+gsettings set org.gnome.shell.extensions.dash-to-dock background-color '#ffffff'
+gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.8
+gsettings set org.gnome.shell.extensions.dash-to-dock bolt-support true
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'focus-or-appspread'
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-background-color false
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-customize-running-dots false
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots-border-color '#ffffff'
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots-border-width 0
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots-color '#ffffff'
+gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true
+gsettings set org.gnome.shell.extensions.dash-to-dock customize-alphas false
+gsettings set org.gnome.shell.extensions.dash-to-dock dance-urgent-applications true
+gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 48
+gsettings set org.gnome.shell.extensions.dash-to-dock default-windows-preview-to-open false
+gsettings set org.gnome.shell.extensions.dash-to-dock disable-overview-on-startup true
+gsettings set org.gnome.shell.extensions.dash-to-dock dock-fixed false
 gsettings set org.gnome.shell.extensions.dash-to-dock dock-position 'LEFT'
-gsettings set org.gnome.shell.extensions.dash-to-dock dash-max-icon-size 50
+gsettings set org.gnome.shell.extensions.dash-to-dock extend-height false
+gsettings set org.gnome.shell.extensions.dash-to-dock force-straight-corner false
+gsettings set org.gnome.shell.extensions.dash-to-dock height-fraction 0.90000000000000002
+gsettings set org.gnome.shell.extensions.dash-to-dock hide-delay 1.3877787807814457e-17
+gsettings set org.gnome.shell.extensions.dash-to-dock hide-tooltip false
+gsettings set org.gnome.shell.extensions.dash-to-dock hot-keys true
+gsettings set org.gnome.shell.extensions.dash-to-dock hotkeys-overlay true
+gsettings set org.gnome.shell.extensions.dash-to-dock hotkeys-show-dock true
+gsettings set org.gnome.shell.extensions.dash-to-dock icon-size-fixed true
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide false
+gsettings set org.gnome.shell.extensions.dash-to-dock intellihide-mode 'FOCUS_APPLICATION_WINDOWS'
+gsettings set org.gnome.shell.extensions.dash-to-dock isolate-locations true
+gsettings set org.gnome.shell.extensions.dash-to-dock isolate-monitors false
+gsettings set org.gnome.shell.extensions.dash-to-dock isolate-workspaces false
+gsettings set org.gnome.shell.extensions.dash-to-dock manualhide false
+gsettings set org.gnome.shell.extensions.dash-to-dock max-alpha 0.80000000000000004
+gsettings set org.gnome.shell.extensions.dash-to-dock middle-click-action 'launch'
+gsettings set org.gnome.shell.extensions.dash-to-dock min-alpha 0.20000000000000001
+gsettings set org.gnome.shell.extensions.dash-to-dock minimize-shift true
+gsettings set org.gnome.shell.extensions.dash-to-dock multi-monitor false
+gsettings set org.gnome.shell.extensions.dash-to-dock preferred-monitor -2
+gsettings set org.gnome.shell.extensions.dash-to-dock preferred-monitor-by-connector 'eDP-1'
+gsettings set org.gnome.shell.extensions.dash-to-dock pressure-threshold 100.0
+gsettings set org.gnome.shell.extensions.dash-to-dock preview-size-scale 0.0
+gsettings set org.gnome.shell.extensions.dash-to-dock require-pressure-to-show false
+gsettings set org.gnome.shell.extensions.dash-to-dock running-indicator-dominant-color false
+gsettings set org.gnome.shell.extensions.dash-to-dock running-indicator-style 'DOTS'
+gsettings set org.gnome.shell.extensions.dash-to-dock scroll-action 'switch-workspace'
+gsettings set org.gnome.shell.extensions.dash-to-dock scroll-switch-workspace true
+gsettings set org.gnome.shell.extensions.dash-to-dock scroll-to-focused-application true
+gsettings set org.gnome.shell.extensions.dash-to-dock shift-click-action 'launch'
+gsettings set org.gnome.shell.extensions.dash-to-dock shift-middle-click-action 'minimize'
+gsettings set org.gnome.shell.extensions.dash-to-dock shortcut ['<Super>q']
+gsettings set org.gnome.shell.extensions.dash-to-dock shortcut-text '<Super>q'
+gsettings set org.gnome.shell.extensions.dash-to-dock shortcut-timeout 2.0
+gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-always-in-the-edge true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-delay 1.3877787807814457e-17
+gsettings set org.gnome.shell.extensions.dash-to-dock show-dock-urgent-notify true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-favorites true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-icons-emblems true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-icons-notifications-counter true
 gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-network true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-mounts-only-mounted false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-running true
+gsettings set org.gnome.shell.extensions.dash-to-dock show-show-apps-button false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-trash false
+gsettings set org.gnome.shell.extensions.dash-to-dock show-windows-preview true
+gsettings set org.gnome.shell.extensions.dash-to-dock transparency-mode 'DEFAULT'
+gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items false
+gsettings set org.gnome.shell.extensions.dash-to-dock workspace-agnostic-urgent-windows true
 gsettings set org.gnome.mutter.keybindings toggle-tiled-left "[]"
 gsettings set org.gnome.mutter.keybindings toggle-tiled-right "[]"
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'Helium.desktop', 'dev.zed.Zed.desktop', 'com.mitchellh.ghostty.desktop', 'tableplus.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'dev.zed.Zed.desktop', 'ghostty_ghostty.desktop', 'tableplus.desktop']"
 
 log "--------------------------------------------------------"
 log "Migration script finished!"

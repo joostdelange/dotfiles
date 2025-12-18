@@ -46,25 +46,25 @@ alias ww=\"cd ~/Projects\"" >> ~/.zshrc
   echo "command = tmux" >> ~/.config/ghostty/config
 fi
 
-if ! $(which starship); then
+if ! command -v starship >/dev/null 2>&1; then
   log "Installing Starship..."
   curl -sS https://starship.rs/install.sh | sh
   echo "eval \"$(starship init zsh)\"" >> ~/.zshrc
 fi
 
-if ! $(which docker); then
+if ! command -v docker >/dev/null 2>&1; then
   log "Installing Docker..."
   sudo apt install -y docker.io
   sudo usermod -aG docker "$USER"
   warn "You will need to log out and back in for Docker group changes to take effect."
 fi
 
-if ! $(which pnpm); then
+if ! command -v pnpm >/dev/null 2>&1; then
   log "Installing pnpm..."
   curl -fsSL https://get.pnpm.io/install.sh | sh -
 fi
 
-if ! $(which mullvad); then
+if ! command -v mullvad >/dev/null 2>&1; then
   log "Installing Mullvad VPN..."
   sudo curl -fsSLo "$KEYRINGS_DIR/mullvad-keyring.asc" https://repository.mullvad.net/deb/mullvad-keyring.asc
   echo "deb [signed-by=$KEYRINGS_DIR/mullvad-keyring.asc arch=$( dpkg --print-architecture )] https://repository.mullvad.net/deb/stable stable main" | sudo tee /etc/apt/sources.list.d/mullvad.list
@@ -73,14 +73,14 @@ if ! $(which mullvad); then
 fi
 
 
-if ! $(which google-chrome-stable); then
+if ! command -v google-chrome-stable >/dev/null 2>&1; then
   log "Installing Google Chrome..."
   wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo apt install -y /tmp/chrome.deb
   rm /tmp/chrome.deb
 fi
 
-if ! $(which tableplus); then
+if ! command -v tableplus >/dev/null 2>&1; then
   log "Installing TablePlus..."
   wget -qO - https://deb.tableplus.com/apt.tableplus.com.gpg.key | gpg --dearmor | sudo tee /etc/apt/trusted.gpg.d/tableplus-archive.gpg > /dev/null
 
@@ -89,7 +89,7 @@ if ! $(which tableplus); then
   sudo apt install -y tableplus
 fi
 
-if ! $(which cursor); then
+if ! command -v cursor >/dev/null 2>&1; then
   log "Installing Cursor..."
 
   curl -fsSL https://downloads.cursor.com/keys/anysphere.asc | sudo gpg --dearmor -o "$KEYRINGS_DIR/cursor-archive-keyring.gpg"
@@ -99,12 +99,12 @@ if ! $(which cursor); then
   sudo apt install -y cursor
 fi
 
-if ! $(which ghostty); then
+if ! command -v ghostty >/dev/null 2>&1; then
   log "Installing Ghostty..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 fi
 
-if ! $(which zed); then
+if ! command -v zed >/dev/null 2>&1; then
   log "Installing Zed Editor..."
   curl -f https://zed.dev/install.sh | sh
   export PATH=$HOME/.local/bin:$PATH

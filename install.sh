@@ -230,7 +230,7 @@ gsettings set org.gnome.shell.extensions.dash-to-dock unity-backlit-items false
 gsettings set org.gnome.shell.extensions.dash-to-dock workspace-agnostic-urgent-windows true
 gsettings set org.gnome.mutter.keybindings toggle-tiled-left "[]"
 gsettings set org.gnome.mutter.keybindings toggle-tiled-right "[]"
-gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'dev.zed.Zed.desktop', 'ghostty_ghostty.desktop', 'tableplus.desktop']"
+gsettings set org.gnome.shell favorite-apps "['org.gnome.Nautilus.desktop', 'google-chrome.desktop', 'dev.zed.Zed.desktop', 'com.mitchellh.ghostty.desktop', 'tableplus.desktop']"
 
 log "--------------------------------------------------------"
 log "Migration script finished!"

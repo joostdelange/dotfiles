@@ -151,6 +151,7 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Yaru'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.dash-to-dock activate-single-window true
 gsettings set org.gnome.shell.extensions.dash-to-dock always-center-icons false
 gsettings set org.gnome.shell.extensions.dash-to-dock animate-show-apps true

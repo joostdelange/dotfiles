@@ -49,7 +49,7 @@ fi
 if ! command -v starship >/dev/null 2>&1; then
   log "Installing Starship..."
   curl -sS https://starship.rs/install.sh | sh
-  echo "eval \"$(starship init zsh)\"" >> ~/.zshrc
+  echo "eval \"\$(starship init zsh)\"" >> ~/.zshrc
 fi
 
 if ! command -v docker >/dev/null 2>&1; then

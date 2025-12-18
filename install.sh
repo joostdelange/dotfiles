@@ -43,7 +43,11 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 
 awsswitch \$(cat ~/.aws/current_sso_profile)
 alias ww=\"cd ~/Projects\"" >> ~/.zshrc
-  echo "command = tmux" >> ~/.config/ghostty/config
+  echo "
+command = tmux
+cursor-style = bar
+background-opacity = 0.9
+maximize = true" >> ~/.config/ghostty/config
 fi
 
 if ! command -v starship >/dev/null 2>&1; then

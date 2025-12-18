@@ -27,6 +27,11 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 fi
 
 if [ ! -d "$HOME/.oh-my-zsh" ]; then
+  log "Setting up AWS SSO Profile..."
+  mkdir -p "$HOME/.aws"
+  touch "$HOME/.aws/current_sso_profile"
+  mkdir -p "$HOME/.config/ghostty"
+
   log "Installing Oh-My-Zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
@@ -36,7 +41,7 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
   echo \$1 > ~/.aws/current_sso_profile;
 }
 
-awsswitch $(cat ~/.aws/current_sso_profile)
+awsswitch \$(cat ~/.aws/current_sso_profile)
 alias ww=\"cd ~/Projects\"" >> ~/.zshrc
   echo "command = tmux" >> ~/.config/ghostty/config
 fi
@@ -96,7 +101,7 @@ fi
 
 if ! command -v ghostty &> /dev/null; then
   log "Installing Ghostty..."
-  sudo snap install ghostty --classic
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 fi
 
 if ! command -v zed &> /dev/null; then
@@ -130,10 +135,6 @@ if [ -z "$(git config --global user.signingkey)" ]; then
   read -p "Enter Git Signingkey: " git_signingkey
   git config --global user.signingkey "$git_signingkey"
 fi
-
-log "Setting up AWS SSO Profile..."
-mkdir -p "$HOME/.aws"
-touch "$HOME/.aws/current_sso_profile"
 
 log "Installing Fonts (Hack Nerd Font)..."
 mkdir -p "$FONTS_DIR"
@@ -208,8 +209,6 @@ gsettings set org.gnome.shell.extensions.dash-to-dock scroll-switch-workspace tr
 gsettings set org.gnome.shell.extensions.dash-to-dock scroll-to-focused-application true
 gsettings set org.gnome.shell.extensions.dash-to-dock shift-click-action 'launch'
 gsettings set org.gnome.shell.extensions.dash-to-dock shift-middle-click-action 'minimize'
-gsettings set org.gnome.shell.extensions.dash-to-dock shortcut ['<Super>q']
-gsettings set org.gnome.shell.extensions.dash-to-dock shortcut-text '<Super>q'
 gsettings set org.gnome.shell.extensions.dash-to-dock shortcut-timeout 2.0
 gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-always-in-the-edge true
 gsettings set org.gnome.shell.extensions.dash-to-dock show-apps-at-top false

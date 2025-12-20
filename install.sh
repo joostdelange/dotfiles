@@ -48,6 +48,7 @@ command = tmux
 cursor-style = bar
 background-opacity = 0.9
 maximize = true" >> ~/.config/ghostty/config
+  echo "set -g mouse on" >> ~/.tmux.conf
 fi
 
 if ! command -v starship >/dev/null 2>&1; then
@@ -66,6 +67,8 @@ fi
 if ! command -v pnpm >/dev/null 2>&1; then
   log "Installing pnpm..."
   curl -fsSL https://get.pnpm.io/install.sh | sh -
+  $HOME/.local/share/pnpm/pnpm env use -g 24
+  $HOME/.local/share/pnpm/pnpm add -g aws-cdk ts-node tsx typescript esbuild @google/gemini-cli
 fi
 
 if ! command -v mullvad >/dev/null 2>&1; then
@@ -155,6 +158,14 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Yaru'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
+gsettings set org.gnome.desktop.applications.terminal
+gsettings set org.gnome.desktop.session.idle-delay 0
+gsettings set org.gnome.desktop.peripherals.keyboard.repeat-interval 15
+gsettings set org.gnome.desktop.peripherals.keyboard.delay 270
+gsettings set org.gnome.desktop.peripherals.mouse.accel-profile 'flat'
+gsettings set org.gnome.desktop.peripherals.mouse.speed 0
+gsettings set org.gnome.settings-daemon.plugins.power.power-button-action 'interactive'
+gsettings set org.gnome.shell.extensions.ding.start-corner 'top-left'
 gsettings set org.gnome.shell.extensions.ding show-home false
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action 'focus-or-appspread'
 gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink true

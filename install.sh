@@ -85,6 +85,9 @@ if ! command -v google-chrome-stable >/dev/null 2>&1; then
   wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
   sudo apt install -y /tmp/chrome.deb
   rm /tmp/chrome.deb
+  xdg-settings set default-url-scheme-handler https google-chrome.desktop
+  xdg-settings set default-url-scheme-handler http google-chrome.desktop
+  sudo update-alternatives --config x-www-browser
 fi
 
 if ! command -v tableplus >/dev/null 2>&1; then
@@ -109,6 +112,8 @@ fi
 if ! command -v ghostty >/dev/null 2>&1; then
   log "Installing Ghostty..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+  sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/bin/ghostty 10
+  sudo update-alternatives --config x-terminal-emulator
 fi
 
 if ! command -v zed >/dev/null 2>&1; then
@@ -158,7 +163,8 @@ gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
 gsettings set org.gnome.desktop.interface gtk-theme 'Yaru-dark'
 gsettings set org.gnome.desktop.interface icon-theme 'Yaru'
 gsettings set org.gnome.desktop.interface show-battery-percentage true
-gsettings set org.gnome.desktop.applications.terminal
+gsettings set org.gnome.desktop.applications.terminal 'ghostty'
+gsettings set org.gnome.desktop.default-applications.terminal exec 'ghostty'
 gsettings set org.gnome.desktop.session.idle-delay 0
 gsettings set org.gnome.desktop.peripherals.keyboard.repeat-interval 15
 gsettings set org.gnome.desktop.peripherals.keyboard.delay 270

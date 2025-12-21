@@ -15,7 +15,7 @@ warn() { echo -e "${YELLOW}[!] $1${NC}"; }
 
 log "Updating system..."
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions libfuse2
+sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions
 
 log "Installing core CLI tools..."
 TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip"

@@ -140,6 +140,14 @@ if ! command -v app-manager >/dev/null 2>&1; then
   chmod +x "$HOME/.local/bin/app-manager"
 fi
 
+if ! command -v t3 >/dev/null 2>&1; then
+  log "Installing T3 Code..."
+  mkdir -p "$HOME/.local/bin"
+  T3_VERSION=$(curl -sSL https://api.github.com/repos/pingdotgg/t3code/releases/latest | jq -r '.tag_name')
+  curl -fsSLf "https://github.com/pingdotgg/t3code/releases/download/${T3_VERSION}/T3-Code-${T3_VERSION#v}-x86_64.AppImage" -o "$HOME/.local/bin/t3"
+  chmod +x "$HOME/.local/bin/t3"
+fi
+
 log "Installing Zed configurations..."
 mkdir -p "$ZED_CONFIG_DIR"
 [ -f "$ZED_CONFIG_DIR/settings.json" ] && mv "$ZED_CONFIG_DIR/settings.json" "$ZED_CONFIG_DIR/settings.json.bak"

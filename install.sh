@@ -133,13 +133,66 @@ if ! command -v zed >/dev/null 2>&1; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
-log "Linking Zed configurations..."
+log "Installing Zed configurations..."
 mkdir -p "$ZED_CONFIG_DIR"
-[ -f "$ZED_CONFIG_DIR/settings.json" ] && [ ! -L "$ZED_CONFIG_DIR/settings.json" ] && mv "$ZED_CONFIG_DIR/settings.json" "$ZED_CONFIG_DIR/settings.json.bak"
-[ -f "$ZED_CONFIG_DIR/keymap.json" ] && [ ! -L "$ZED_CONFIG_DIR/keymap.json" ] && mv "$ZED_CONFIG_DIR/keymap.json" "$ZED_CONFIG_DIR/keymap.json.bak"
+[ -f "$ZED_CONFIG_DIR/settings.json" ] && mv "$ZED_CONFIG_DIR/settings.json" "$ZED_CONFIG_DIR/settings.json.bak"
+[ -f "$ZED_CONFIG_DIR/keymap.json" ] && mv "$ZED_CONFIG_DIR/keymap.json" "$ZED_CONFIG_DIR/keymap.json.bak"
 
-ln -sf "$DOTFILES_DIR/zed/settings.json" "$ZED_CONFIG_DIR/settings.json"
-ln -sf "$DOTFILES_DIR/zed/keymap.json" "$ZED_CONFIG_DIR/keymap.json"
+cat > "$ZED_CONFIG_DIR/settings.json" << 'EOF'
+{
+  "theme": {
+    "mode": "system",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "icon_theme": "Material Icon Theme",
+  "ui_font_family": "Hack Nerd Font",
+  "buffer_font_family": "Hack Nerd Font Mono",
+  "ui_font_size": 18,
+  "buffer_font_size": 16,
+  "tab_size": 2,
+  "autosave": "on_focus_change",
+  "format_on_save": "off",
+  "show_edit_predictions": false,
+  "auto_install_extensions": {
+    "dockerfile": true,
+    "git-firefly": true,
+    "html": true,
+    "lua": true,
+    "material-icon-theme": true,
+    "one-dark-pro": true,
+    "postgres-language-server": true,
+    "pug": true,
+    "sql": true,
+    "toml": true,
+    "vue": true
+  },
+  "preview_tabs": {
+    "enabled": false
+  },
+  "project_panel": {
+    "auto_reveal_entries": false
+  }
+}
+EOF
+
+cat > "$ZED_CONFIG_DIR/keymap.json" << 'EOF'
+[
+  {
+    "context": "Workspace",
+    "bindings": {
+      "shift shift": "project_panel::CollapseAllEntries"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "ctrl-d": "editor::DuplicateLineDown",
+      "ctrl-shift-d": ["editor::SelectNext", { "replace_newest": false }]
+    }
+  }
+]
+EOF
 
 log "Configuring Git..."
 git config --global pull.rebase false

@@ -133,6 +133,13 @@ if ! command -v zed >/dev/null 2>&1; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
+if ! command -v app-manager >/dev/null 2>&1; then
+  log "Installing AppManager..."
+  mkdir -p "$HOME/.local/bin"
+  curl -fsSLf "https://github.com/kem-a/AppManager/releases/latest/download/AppManager" -o "$HOME/.local/bin/app-manager"
+  chmod +x "$HOME/.local/bin/app-manager"
+fi
+
 log "Installing Zed configurations..."
 mkdir -p "$ZED_CONFIG_DIR"
 [ -f "$ZED_CONFIG_DIR/settings.json" ] && mv "$ZED_CONFIG_DIR/settings.json" "$ZED_CONFIG_DIR/settings.json.bak"

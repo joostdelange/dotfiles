@@ -18,7 +18,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions
 
 log "Installing core CLI tools..."
-TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip libfuse2"
+TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip libfuse2 flatpak"
 sudo apt install -y $TOOLS
 
 if [ "$SHELL" != "$(which zsh)" ]; then

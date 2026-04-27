@@ -145,31 +145,16 @@ if ! command -v opencode-desktop >/dev/null 2>&1 && ! dpkg -s opencode-desktop >
   rm /tmp/opencode-desktop.deb
 fi
 
-if ! command -v codex >/dev/null 2>&1; then
-  log "Installing Codex CLI..."
-  if command -v pnpm >/dev/null 2>&1; then
-    if [ -n "$PNPM_HOME" ]; then
-      export PATH="$PNPM_HOME:$PATH"
-    fi
-    pnpm add -g @openai/codex
-  else
-    warn "pnpm not available, skipping Codex CLI installation"
-  fi
-fi
-
 if ! command -v app-manager >/dev/null 2>&1; then
-  log "Installing AppManager..."
-  mkdir -p "$HOME/.local/bin"
-  curl -fsSLf "https://github.com/kem-a/AppManager/releases/latest/download/AppManager" -o "$HOME/.local/bin/app-manager"
-  chmod +x "$HOME/.local/bin/app-manager"
+  log "Downloading AppManager..."
+  APP_MANAGER_VERSION=$(curl -sSL https://api.github.com/repos/kem-a/AppManager/releases/latest | jq -r '.tag_name')
+  curl -fsSLf "https://github.com/kem-a/AppManager/releases/download/${APP_MANAGER_VERSION}/AppManager-${APP_MANAGER_VERSION#v}-anylinux-x86_64.AppImage" -o "$HOME/Downloads/AppManager.AppImage"
 fi
 
 if ! command -v t3 >/dev/null 2>&1; then
-  log "Installing T3 Code..."
-  mkdir -p "$HOME/.local/bin"
+  log "Downloading T3 Code..."
   T3_VERSION=$(curl -sSL https://api.github.com/repos/pingdotgg/t3code/releases/latest | jq -r '.tag_name')
-  curl -fsSLf "https://github.com/pingdotgg/t3code/releases/download/${T3_VERSION}/T3-Code-${T3_VERSION#v}-x86_64.AppImage" -o "$HOME/.local/bin/t3"
-  chmod +x "$HOME/.local/bin/t3"
+  curl -fsSLf "https://github.com/pingdotgg/t3code/releases/download/${T3_VERSION}/T3-Code-${T3_VERSION#v}-x86_64.AppImage" -o "$HOME/Downloads/T3-Code.AppImage"
 fi
 
 log "Installing Zed configurations..."

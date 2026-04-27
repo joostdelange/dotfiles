@@ -18,7 +18,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions
 
 log "Installing core CLI tools..."
-TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip"
+TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip libfuse2"
 sudo apt install -y $TOOLS
 
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -68,11 +68,8 @@ if ! command -v pnpm >/dev/null 2>&1; then
   log "Installing pnpm..."
   curl -fsSL https://get.pnpm.io/install.sh | sh -
   echo "
-export PNPM_HOME=\"$HOME/.local/share/pnpm\"
-case \":\$PATH:\" in
-  *\":\$PNPM_HOME:\"*) ;;
-  *) export PATH=\"\$PNPM_HOME:\$PATH\" ;;
-esac" >> ~/.zshrc
+export PNPM_HOME=\"\$HOME/.local/share/pnpm\"
+" >> ~/.zshrc
 fi
 
 if ! command -v aws >/dev/null 2>&1; then
@@ -130,12 +127,14 @@ fi
 if ! command -v zed >/dev/null 2>&1; then
   log "Installing Zed Editor..."
   curl -f https://zed.dev/install.sh | sh
-  export PATH=$HOME/.local/bin:$PATH
 fi
 
 if ! command -v opencode >/dev/null 2>&1; then
   log "Installing opencode (CLI)..."
   curl -fsSL https://opencode.ai/install | bash
+  echo "
+export OPENCODE_HOME=\"\$HOME/.opencode/bin\"
+" >> ~/.zshrc
 fi
 
 if ! command -v opencode-desktop >/dev/null 2>&1 && ! dpkg -s opencode-desktop >/dev/null 2>&1; then
@@ -245,6 +244,11 @@ if [ ! -f "$FONTS_DIR/HackNerdFont-Regular.ttf" ]; then
   rm /tmp/Hack.zip
   fc-cache -fv
 fi
+
+echo "
+export LOCAL_HOME=\"\$HOME/.local/bin\"
+export PATH=\"\$LOCAL_HOME:\$OPENCODE_HOME:\$PNPM_HOME:\$PATH\"
+" >> ~/.zshrc
 
 log "Applying GNOME settings..."
 

@@ -133,6 +133,30 @@ if ! command -v zed >/dev/null 2>&1; then
   export PATH=$HOME/.local/bin:$PATH
 fi
 
+if ! command -v opencode >/dev/null 2>&1; then
+  log "Installing opencode (CLI)..."
+  curl -fsSL https://opencode.ai/install | bash
+fi
+
+if ! command -v opencode-desktop >/dev/null 2>&1 && ! dpkg -s opencode-desktop >/dev/null 2>&1; then
+  log "Installing opencode Desktop..."
+  wget -O /tmp/opencode-desktop.deb https://opencode.ai/download/stable/linux-x64-deb
+  sudo apt install -y /tmp/opencode-desktop.deb
+  rm /tmp/opencode-desktop.deb
+fi
+
+if ! command -v codex >/dev/null 2>&1; then
+  log "Installing Codex CLI..."
+  if command -v pnpm >/dev/null 2>&1; then
+    if [ -n "$PNPM_HOME" ]; then
+      export PATH="$PNPM_HOME:$PATH"
+    fi
+    pnpm add -g @openai/codex
+  else
+    warn "pnpm not available, skipping Codex CLI installation"
+  fi
+fi
+
 if ! command -v app-manager >/dev/null 2>&1; then
   log "Installing AppManager..."
   mkdir -p "$HOME/.local/bin"
@@ -155,11 +179,17 @@ mkdir -p "$ZED_CONFIG_DIR"
 
 cat > "$ZED_CONFIG_DIR/settings.json" << 'EOF'
 {
-  "theme": {
-    "mode": "system",
-    "light": "One Light",
-    "dark": "One Dark"
+  "project_panel": { "dock": "left", "auto_reveal_entries": false },
+  "outline_panel": { "dock": "left" },
+  "collaboration_panel": { "dock": "left" },
+  "git_panel": { "dock": "left" },
+  "preview_tabs": { "enabled": false },
+  "agent": { "sidebar_side": "right", "dock": "right" },
+  "agent_servers": {
+    "codex-acp": { "type": "registry" },
+    "opencode": { "type": "registry" }
   },
+  "theme": { "mode": "system", "light": "One Light", "dark": "One Dark" },
   "icon_theme": "Material Icon Theme",
   "ui_font_family": "Hack Nerd Font",
   "buffer_font_family": "Hack Nerd Font Mono",
@@ -181,14 +211,9 @@ cat > "$ZED_CONFIG_DIR/settings.json" << 'EOF'
     "sql": true,
     "toml": true,
     "vue": true
-  },
-  "preview_tabs": {
-    "enabled": false
-  },
-  "project_panel": {
-    "auto_reveal_entries": false
   }
 }
+
 EOF
 
 cat > "$ZED_CONFIG_DIR/keymap.json" << 'EOF'

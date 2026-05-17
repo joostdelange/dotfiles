@@ -208,18 +208,89 @@ mkdir -p "$ZED_CONFIG_DIR"
 
 cat > "$ZED_CONFIG_DIR/settings.json" << 'EOF'
 {
-  "project_panel": { "dock": "left", "auto_reveal_entries": false },
-  "outline_panel": { "dock": "left" },
-  "collaboration_panel": { "dock": "left" },
-  "git_panel": { "dock": "left" },
-  "preview_tabs": { "enabled": false },
-  "agent": { "sidebar_side": "right", "dock": "right" },
-  "agent_servers": {
-    "codex-acp": { "type": "registry" },
-    "opencode": { "type": "registry" }
+  "cli_default_open_behavior": "existing_window",
+  "git_panel": {
+    "dock": "left"
   },
-  "theme": { "mode": "system", "light": "One Light", "dark": "One Dark" },
-  "icon_theme": "Material Icon Theme",
+  "collaboration_panel": {
+    "dock": "left"
+  },
+  "outline_panel": {
+    "dock": "left"
+  },
+  "disable_ai": false,
+  "show_edit_predictions": false,
+  "edit_predictions": {
+    "provider": "zed"
+  },
+  "git_hosting_providers": [
+    {
+      "provider": "bitbucket",
+      "name": "Bitbucket",
+      "base_url": "https://bitbucket.org"
+    }
+  ],
+  "remove_trailing_whitespace_on_save": false,
+  "agent_servers": {
+    "opencode": {
+      "type": "registry"
+    },
+    "codex-acp": {
+      "default_config_options": {
+        "mode": "full-access"
+      },
+      "type": "registry"
+    },
+    "cursor": {
+      "type": "registry"
+    }
+  },
+  "agent": {
+    "flexible": true,
+    "dock": "right",
+    "sidebar_side": "right",
+    "button": true,
+    "default_profile": "write",
+    "model_parameters": [],
+    "default_model": {
+      "enable_thinking": true,
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5"
+    },
+    "commit_message_model": {
+      "provider": "openai",
+      "model": "gpt-5.4",
+      "enable_thinking": true
+    }
+  },
+  "code_actions_on_format": {
+    "source.fixAll.eslint": false
+  },
+  "languages": {
+    "JSON": {
+      "formatter": "prettier"
+    },
+    "TypeScript": {
+      "language_servers": ["typescript-language-server", "!vtsls", "..."],
+    },
+    "JavaScript": {
+      "language_servers": ["typescript-language-server", "!vtsls", "..."]
+    }
+  },
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "One Dark"
+  },
+  "project_panel": {
+    "dock": "left",
+    "auto_reveal_entries": false
+  },
+  "icon_theme": {
+    "mode": "dark",
+    "light": "Material Icon Theme",
+    "dark": "Material Icon Theme"
+  },
   "ui_font_family": "Hack Nerd Font",
   "buffer_font_family": "Hack Nerd Font Mono",
   "ui_font_size": 18,
@@ -227,19 +298,9 @@ cat > "$ZED_CONFIG_DIR/settings.json" << 'EOF'
   "tab_size": 2,
   "autosave": "on_focus_change",
   "format_on_save": "off",
-  "show_edit_predictions": false,
-  "auto_install_extensions": {
-    "dockerfile": true,
-    "git-firefly": true,
-    "html": true,
-    "lua": true,
-    "material-icon-theme": true,
-    "one-dark-pro": true,
-    "postgres-language-server": true,
-    "pug": true,
-    "sql": true,
-    "toml": true,
-    "vue": true
+  "ensure_final_newline_on_save": false,
+  "preview_tabs": {
+    "enabled": false
   }
 }
 
@@ -258,6 +319,17 @@ cat > "$ZED_CONFIG_DIR/keymap.json" << 'EOF'
     "bindings": {
       "ctrl-d": "editor::DuplicateLineDown",
       "ctrl-shift-d": ["editor::SelectNext", { "replace_newest": false }]
+    }
+  },
+  {
+    "context": "!AcpThread > Editor && mode == full",
+    "unbind": {
+      "ctrl-:": "editor::ToggleInlayHints"
+    }
+  },
+  {
+    "bindings": {
+      "ctrl-:": "multi_workspace::NextProject"
     }
   }
 ]

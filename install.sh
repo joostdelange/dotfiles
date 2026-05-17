@@ -34,7 +34,18 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
 
   log "Installing Oh-My-Zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-  git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+
+  log "Installing zsh-autosuggestions..."
+  git clone https://github.com/zsh-users/zsh-autosuggestions "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+
+  log "Enabling zsh-autosuggestions plugin..."
+  if grep -q "^plugins=" "$HOME/.zshrc"; then
+    if ! grep -q "^plugins=.*zsh-autosuggestions" "$HOME/.zshrc"; then
+      sed -i 's/^plugins=(\(.*\))/plugins=(\1 zsh-autosuggestions)/' "$HOME/.zshrc"
+    fi
+  else
+    echo "plugins=(git zsh-autosuggestions)" >> "$HOME/.zshrc"
+  fi
 
   echo "aws() {
   if [[ \"\$1\" == \"switch\" ]]; then

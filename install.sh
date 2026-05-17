@@ -15,7 +15,7 @@ warn() { echo -e "${YELLOW}[!] $1${NC}"; }
 
 log "Updating system..."
 sudo apt update && sudo apt upgrade -y
-sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions
+sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
 
 log "Installing core CLI tools..."
 TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip libfuse2 flatpak gnome-software-plugin-flatpak"
@@ -36,12 +36,15 @@ if [ ! -d "$HOME/.oh-my-zsh" ]; then
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
   git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
 
-  echo "awsswitch() {
-  export AWS_PROFILE=\$1;
-  echo \$1 > ~/.aws/current_sso_profile;
+  echo "aws() {
+  if [[ \"\$1\" == \"switch\" ]]; then
+    export AWS_PROFILE=\"\$2\"
+    echo \$2 > ~/.aws/current_sso_profile
+  else
+    command aws \"\$@\"
+  fi
 }
 
-awsswitch \$(cat ~/.aws/current_sso_profile)
 alias ww=\"cd ~/Projects\"" >> ~/.zshrc
   echo "
 command = tmux
@@ -50,6 +53,44 @@ background-opacity = 0.9
 maximize = true" >> ~/.config/ghostty/config
   echo "set -g mouse on" >> ~/.tmux.conf
 fi
+
+log "Installing Java 21..."
+if ! command -v java >/dev/null 2>&1 || ! java -version 2>&1 | grep -q 'version "21\|openjdk version "21'; then
+  sudo apt install -y openjdk-21-jdk
+fi
+
+log "Installing Android Studio..."
+ANDROID_STUDIO_DIR="$HOME/Documents/android-studio"
+ANDROID_STUDIO_TAR="/tmp/android-studio-linux.tar.gz"
+ANDROID_STUDIO_URL="https://edgedl.me.gvt1.com/edgedl/android/studio/ide-zips/2025.3.4.8/android-studio-2025.3.4.8-linux.tar.gz"
+
+if [ ! -x "$ANDROID_STUDIO_DIR/bin/studio" ]; then
+  mkdir -p "$HOME/Documents"
+
+  wget -O "$ANDROID_STUDIO_TAR" "$ANDROID_STUDIO_URL"
+
+  rm -rf "$ANDROID_STUDIO_DIR"
+  tar -xzf "$ANDROID_STUDIO_TAR" -C "$HOME/Documents"
+  rm "$ANDROID_STUDIO_TAR"
+
+  log "Android Studio installed at $ANDROID_STUDIO_DIR"
+fi
+
+log "Creating Android Studio desktop entry..."
+mkdir -p "$HOME/.local/share/applications"
+
+cat > "$HOME/.local/share/applications/android-studio.desktop" << EOF
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Android Studio
+Exec=$ANDROID_STUDIO_DIR/bin/studio
+Icon=$ANDROID_STUDIO_DIR/bin/studio.png
+Terminal=false
+Categories=Development;IDE;
+EOF
+
+update-desktop-database "$HOME/.local/share/applications" >/dev/null 2>&1 || true
 
 if ! command -v starship >/dev/null 2>&1; then
   log "Installing Starship..."
@@ -245,10 +286,32 @@ if [ ! -f "$FONTS_DIR/HackNerdFont-Regular.ttf" ]; then
   fc-cache -fv
 fi
 
-echo "
-export LOCAL_HOME=\"\$HOME/.local/bin\"
-export PATH=\"\$LOCAL_HOME:\$OPENCODE_HOME:\$PNPM_HOME:\$PATH\"
-" >> ~/.zshrc
+log "Configuring shell environment..."
+
+ENV_BLOCK_START="# >>> dev environment >>>"
+ENV_BLOCK_END="# <<< dev environment <<<"
+
+sed -i "/$ENV_BLOCK_START/,/$ENV_BLOCK_END/d" "$HOME/.zshrc"
+
+cat >> "$HOME/.zshrc" << 'EOF'
+# >>> dev environment >>>
+export LOCAL_HOME="$HOME/.local/bin"
+export PNPM_HOME="$HOME/.local/share/pnpm"
+export OPENCODE_HOME="$HOME/.opencode/bin"
+
+export PATH="$LOCAL_HOME:$OPENCODE_HOME:$PNPM_HOME:$PATH"
+
+export CDK_DISABLE_CLI_TELEMETRY=true
+export CAPACITOR_ANDROID_STUDIO_PATH="$HOME/Documents/android-studio/bin/studio"
+export ANDROID_SDK_ROOT="$HOME/Android/Sdk"
+export ANDROID_HOME="$HOME/Android/Sdk"
+export JAVA_HOME="/usr/lib/jvm/java-1.21.0-openjdk-amd64"
+export CHROME_DEVEL_SANDBOX="/opt/google/chrome/chrome-sandbox"
+export EDITOR="$HOME/.local/bin/zed"
+export AWS_PROFILE="$(cat ~/.aws/current_sso_profile 2>/dev/null)"
+export ELECTRON_OZONE_PLATFORM_HINT=auto
+# <<< dev environment <<<
+EOF
 
 log "Applying GNOME settings..."
 

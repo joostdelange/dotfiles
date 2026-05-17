@@ -18,7 +18,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install -y curl wget git build-essential unzip jq zsh gnome-tweaks gnome-shell-extensions libc6:i386 libncurses5:i386 libstdc++6:i386 lib32z1 libbz2-1.0:i386
 
 log "Installing core CLI tools..."
-TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip libfuse2 flatpak gnome-software-plugin-flatpak"
+TOOLS="git jq unzip nodejs npm rustc cargo neovim tmux python3-pip libfuse2 flatpak gnome-software-plugin-flatpak ffmpeg imagemagick"
 sudo apt install -y $TOOLS
 
 if [ "$SHELL" != "$(which zsh)" ]; then
@@ -139,7 +139,6 @@ if ! command -v mullvad >/dev/null 2>&1; then
   sudo apt install -y mullvad-vpn
 fi
 
-
 if ! command -v google-chrome-stable >/dev/null 2>&1; then
   log "Installing Google Chrome..."
   wget -O /tmp/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -200,12 +199,6 @@ if ! command -v app-manager >/dev/null 2>&1; then
   log "Downloading AppManager..."
   APP_MANAGER_VERSION=$(curl -sSL https://api.github.com/repos/kem-a/AppManager/releases/latest | jq -r '.tag_name')
   curl -fsSLf "https://github.com/kem-a/AppManager/releases/download/${APP_MANAGER_VERSION}/AppManager-${APP_MANAGER_VERSION#v}-anylinux-x86_64.AppImage" -o "$HOME/Downloads/AppManager.AppImage"
-fi
-
-if ! command -v t3 >/dev/null 2>&1; then
-  log "Downloading T3 Code..."
-  T3_VERSION=$(curl -sSL https://api.github.com/repos/pingdotgg/t3code/releases/latest | jq -r '.tag_name')
-  curl -fsSLf "https://github.com/pingdotgg/t3code/releases/download/${T3_VERSION}/T3-Code-${T3_VERSION#v}-x86_64.AppImage" -o "$HOME/Downloads/T3-Code.AppImage"
 fi
 
 log "Installing Zed configurations..."

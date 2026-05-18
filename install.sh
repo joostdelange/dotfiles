@@ -301,6 +301,19 @@ cat > "$ZED_CONFIG_DIR/settings.json" << 'EOF'
   "ensure_final_newline_on_save": false,
   "preview_tabs": {
     "enabled": false
+  },
+  "auto_install_extensions": {
+    "dockerfile": true,
+    "git-firefly": true,
+    "html": true,
+    "lua": true,
+    "material-icon-theme": true,
+    "one-dark-pro": true,
+    "postgres-language-server": true,
+    "pug": true,
+    "sql": true,
+    "toml": true,
+    "vue": true
   }
 }
 
